@@ -5,14 +5,12 @@
 #ifndef ROYANDIDANPROJECT2_CACHEMANAGER_H
 #define ROYANDIDANPROJECT2_CACHEMANAGER_H
 
+template <class P, class S>
 class CacheManager{
 public:
-    //TODO - change to proper classes for each functions.
-    virtual bool solutionExists(int problem) = 0;
-    virtual int getSolution(int problem) = 0;
-    //TODO - is it supposed to get a problem and a solution and save or get
-    // only a problem ?
-    virtual void saveSolution(int problem, int solution) = 0;
+    virtual bool solutionExists(P problem) = 0;
+    virtual S getSolution(P problem) = 0;
+    virtual void saveSolution(P problem, S solution) = 0;
 
 };
 

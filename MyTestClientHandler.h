@@ -10,9 +10,11 @@
 #include "Solver.h"
 #include "CacheManager.h"
 
+template <class P, class S>
+
 class MyTestClientHandler : public ClientHandler{
-    Solver solver;
-    CacheManager* cacheManager;
+    Solver<P,S> solver;
+    CacheManager<P,S>* cacheManager;
 public:
 
 };
