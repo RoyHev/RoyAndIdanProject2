@@ -6,7 +6,7 @@
 #define ROYANDIDANPROJECT2_CACHEMANAGER_H
 
 template <class P, class S>
-class CacheManager{
+class gCacheManager{
 public:
     virtual bool solutionExists(P problem) = 0;
     virtual S getSolution(P problem) = 0;
