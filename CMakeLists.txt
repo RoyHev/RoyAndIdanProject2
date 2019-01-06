@@ -3,4 +3,4 @@ project(RoyAndIdanProject2)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(RoyAndIdanProject2 main.cpp Server.cpp Server.h MySerialServer.cpp MySerialServer.h)
+add_executable(RoyAndIdanProject2 main.cpp Server.cpp Server.h MySerialServer.cpp MySerialServer.h ClientHandler.h MyTestClientHandler.cpp MyTestClientHandler.h Solver.h CacheManager.h)
