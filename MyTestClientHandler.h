@@ -8,9 +8,11 @@
 
 #include "ClientHandler.h"
 #include "Solver.h"
+#include "CacheManager.h"
 
 class MyTestClientHandler : public ClientHandler{
     Solver solver;
+    CacheManager* cacheManager;
 public:
 
 };
