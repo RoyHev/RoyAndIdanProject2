@@ -5,7 +5,7 @@
 #include "FileCacheManager.h"
 
 template<class P>
-bool FileCacheManager::solutionExists(P problem) {
+bool hFileCacheManager::solutionExists(P problem) {
     if (this->cacheMap.find(problem) != cacheMap.end()) {
         return true;
     }
