@@ -7,10 +7,19 @@
 
 
 #include "CacheManager.h"
+#include <map>
 
-class FileCacheManager : public CacheManager {
+class FileCacheManager : public CacheManager<class P, class S> {
+    std::map<S, P> cacheMap;
 public:
-    //TODO fill in the functions.
+    template<class P>
+    bool solutionExists(P problem);
+
+    template<class P, class S>
+    S getSolution(P problem);
+
+    template<class P, class S>
+    void saveSolution(P problem, S solution);
 
 };
 
