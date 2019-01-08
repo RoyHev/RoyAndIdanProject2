@@ -1,0 +1,14 @@
+//
+// Created by roy on 08/01/19.
+//
+
+#ifndef ROYANDIDANPROJECT2_BESTFIRSTSEARCH_H
+#define ROYANDIDANPROJECT2_BESTFIRSTSEARCH_H
+
+
+class BestFirstSearch {
+
+};
+
+
+#endif //ROYANDIDANPROJECT2_BESTFIRSTSEARCH_H

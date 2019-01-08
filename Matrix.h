@@ -6,10 +6,13 @@
 #define ROYANDIDANPROJECT2_MATRIX_H
 
 #include <utility>
+#include <cstdio>
+#include <cstdlib>
 #include "Searchable.h"
 #include "Point.h"
 
 #define FIRST_COLUMN 0
+#define INFINITY -1
 
 
 class Matrix : public Searchable<Point> {
@@ -38,14 +41,17 @@ public:
             return this->goalState;
     }
 
-    //TODO - take care of option that it is INFINITY.
-    // TODO - take care of out of bounds of I or J.
     vector<State<Point>> getPossibleStates(State<Point>* fromState){
             vector<State<Point>> possibleStates;
             double i = fromState->getState().getLeft();
             double j = fromState->getState().getRight();
+            //checks if the indexes are out of the matrix's bounds.
+            if (i < 0 || j < 0 ||  i >= rows || j>= columns){
+                    perror("Out of Bounds.");
+                    exit(1);
+            }
             //not first row add above.
-            if (i != 0){
+            if (i != 0 && matrix[i-1][j] != INFINITY){
                     Point tempPoint(i-1,j);
                     State<Point> tempState(tempPoint);
                     tempState.setCost(this->matrix[i-1][j]);
@@ -53,7 +59,7 @@ public:
                     possibleStates.emplace_back(tempState);
             }
             //not first column add left.
-            if (j != 0){
+            if (j != 0 && matrix[i][j-1] != INFINITY){
                     Point tempPoint(i,j-1);
                     State<Point> tempState(tempPoint);
                     tempState.setCost(this->matrix[i][j-1]);
@@ -61,7 +67,7 @@ public:
                     possibleStates.emplace_back(tempState);
             }
             //not last row, add below
-            if (i != this->rows - 1){
+            if (i != this->rows - 1 && matrix[i+1][j] != INFINITY){
                     Point tempPoint(i+1,j);
                     State<Point> tempState(tempPoint);
                     tempState.setCost(this->matrix[i+1][j]);
@@ -69,7 +75,7 @@ public:
                     possibleStates.emplace_back(tempState);
             }
             //not last column, add right
-            if (j != this->columns - 1){
+            if (j != this->columns - 1 && matrix[i][j+1] != INFINITY){
                     Point tempPoint(i,j+1);
                     State<Point> tempState(tempPoint);
                     tempState.setCost(this->matrix[i][j+1]);
