@@ -10,7 +10,6 @@
 
 template <class T>
 class BestFirstSearch : public Searcher<T> {
-    bool hasItem(priority_queue)
 
 };
 
