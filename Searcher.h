@@ -12,7 +12,7 @@ template<class T>
 class Searcher {
 
 public:
-    virtual std::vector<T> search(Searchable<T> *searchable) = 0;
+    virtual std::vector<State<T>> search(Searchable<T> *searchable) = 0;
 
 };
 
