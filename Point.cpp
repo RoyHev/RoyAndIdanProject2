@@ -26,3 +26,9 @@ const bool Point::operator==(const Point &second) {
     }
     return false;
 }
+
+Point::Point(int l, int r) {
+    this->left = l;
+    this->right = r;
+
+}
