@@ -13,7 +13,6 @@
 
 
 class Matrix : public Searchable<Point> {
-//    using Point = pair<int,int>;
 private:
     vector<vector<double>> matrix;
     State<Point> initialState;
