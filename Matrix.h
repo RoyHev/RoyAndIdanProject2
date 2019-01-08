@@ -11,11 +11,17 @@
 
 class Matrix : public Searchable<Point> {
 private:
+    vector<vector<double>> matrix;
+    State<Point> initialState;
+    State<Point> goalState;
+    size_t rows;
+    size_t columns;
 
 public:
-    virtual State<Point> getInitialState() = 0;
-    virtual State<Point> getGoalState() = 0;
-    virtual vector<Point> getPossibleStates() = 0;
+    Matrix(Point initial, Point goal, vector<vector<double>> mat);
+    virtual State<Point> getInitialState();
+    virtual State<Point> getGoalState();
+    virtual vector<State<Point>> getPossibleStates(State<Point> fromState);
 
 };
 
