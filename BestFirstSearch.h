@@ -50,6 +50,8 @@ public:
                 }
             }
         }
+        //could not find path from requested initial to goal.
+        return nullptr;
     }
 };
 
