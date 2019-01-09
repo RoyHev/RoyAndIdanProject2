@@ -15,7 +15,7 @@ public:
     bool alreadyVisited(priority_queue <State<T>*> openQ, State<T>* curState){
         bool wasVisited = false;
         while(!openQ.empty()){
-            if (openQ.top().equalsTo(curState)){
+            if (openQ.top()->equalsTo(curState)){
                 wasVisited = true;
                 break;
             }
@@ -25,28 +25,32 @@ public:
     }
 
     vector<State<T>*> search(Searchable<T> *searchable) override {
+        vector<State<T> *> nodesVisited;
         vector<State<T>*> tempVec;
         unordered_set<State<T>*> unorderedSetClose;
         priority_queue<State<T>*> priorityQueueOpen;
         vector<State<T>*> path;
-        priorityQueueOpen.push(searchable->getInitialState());
+        State<T> *currentState = searchable->getInitialState();
+        currentState->setCameFrom(currentState);
+        priorityQueueOpen.push(currentState);
+        nodesVisited.emplace_back(currentState);
         while (!priorityQueueOpen.empty()) {
-            State<T> *temp = priorityQueueOpen.top();
+            currentState = priorityQueueOpen.top();
             priorityQueueOpen.pop();
-            unorderedSetClose.insert(temp);
-            if (temp == searchable->getGoalState()){
-                while (!temp->equalsTo(searchable->getInitialState())){
-                    temp = temp->getCameFrom();
-                    path.insert(path.begin(), temp);
+            unorderedSetClose.insert(currentState);
+            if (currentState == searchable->getGoalState()){
+                while (!currentState->equalsTo(searchable->getInitialState())){
+                    currentState = currentState->getCameFrom();
+                    path.insert(path.begin(), currentState);
                 }
                 return path;
 
             } else {
-                for (State<T>* search : searchable->getPossibleStates(temp)){
-                    if (!alreadyVisited(priorityQueueOpen,search) &&
-                    unorderedSetClose.count(search) != 0){
-                        search->setCameFrom(temp);
-                        priorityQueueOpen.push(search);
+                for (State<T>* adj : searchable->getPossibleStates(currentState)){
+                    if (!alreadyVisited(priorityQueueOpen,adj) &&
+                    unorderedSetClose.count(adj) != 0){
+                        adj->setCameFrom(currentState);
+                        priorityQueueOpen.push(adj);
                     }
                 }
             }
