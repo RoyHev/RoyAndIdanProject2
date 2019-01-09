@@ -1,4 +1,5 @@
 #include <iostream>
+
 using namespace std;
 
 #include "Point.h"
@@ -13,23 +14,23 @@ using namespace std;
 #include "BreadthFirstSearch.h"
 
 int main() {
-    vector<vector<double>> vec;
+    vector<vector<State<Point> *>> vec;
     double num = 1;
-    for (int i = 0; i<4; i++){
-        vector<double> tempVec;
-        for (int j=0; j<4; j++){
-            tempVec.push_back(num);
+    for (int i = 0; i < 4; i++) {
+        vector<State<Point> *> tempVec;
+        for (int j = 0; j < 4; j++) {
+            State<Point> *state = new State<Point>(Point(i, j));
+            state->setCost(num);
+            tempVec.push_back(state);
             num++;
         }
         vec.push_back(tempVec);
     }
-    Point p1(1,1);
-    Point p2(3,2);
-////
-//    Searchable<Point>* searchable = new Matrix(p1,p2,vec);
+    Point p1(0, 0);
+    Point p2(2, 2);
     Searchable<Point> *s = new Matrix(p1, p2, vec);
-    Searcher<Point> *searcher = new DepthFirstSearch<Point>();
-    vector<State<Point>> solution;
+    Searcher<Point> *searcher = new BreadthFirstSearch<Point>();
+    vector<State<Point>*> solution;
     solution = searcher->search(s);
 
     return 0;

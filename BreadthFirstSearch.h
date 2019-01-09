@@ -7,39 +7,55 @@
 
 #include "Searcher.h"
 #include <queue>
+#include <iostream>
 
 template<class T>
 class BreadthFirstSearch : public Searcher<T> {
 public:
-    vector<State<T>> search(Searchable<T> *searchable) override {
-        vector<State<T>> path;
-        State<T> currentState = searchable->getInitialState();
-        State<T> goalState = searchable->getGoalState();
-        queue<State<T>> stateQ;
-        currentState.setVisited(true);
-        currentState.setCameFrom(nullptr);
+
+    bool hasNodeBeenVisited(vector<State<T> *> nodesVec, State<T> *node) {
+        for (State<T> *state : nodesVec) {
+            if (state->equalsTo(node)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    vector<State<T> *> search(Searchable<T> *searchable) override {
+        vector<State<T> *> nodesVisited;
+        vector<State<T> *> tempVec;
+        vector<State<T> *> path;
+        State<T> *currentState = searchable->getInitialState();
+        currentState->setCameFrom(currentState);
+        nodesVisited.emplace_back(currentState);
+        State<T> *goalState = searchable->getGoalState();
+        queue<State<T> *> stateQ;
         stateQ.push(currentState);
         while (!stateQ.empty()) {
+
             currentState = stateQ.front();
-            if (currentState.equalsTo(goalState)) {
-                while (!(currentState.equalsTo(goalState))) {
-                    currentState = *currentState.getCameFrom();
+            if (currentState->equalsTo(goalState)) {
+                path.insert(path.begin(), goalState);
+                while (!(currentState->equalsTo(
+                        searchable->getInitialState()))) {
+                    currentState = currentState->getCameFrom();
                     path.insert(path.begin(), currentState);
                 }
                 return path;
             }
             stateQ.pop();
-            for (State<T> adj : searchable->getPossibleStates(currentState)) {
-                if (adj.getVisited()) {
+            for (State<T> *adj : searchable->getPossibleStates(currentState)) {
+                if (hasNodeBeenVisited(nodesVisited, adj)) {
                     continue;
                 }
-                adj.setVisited(true);
-                adj.setCameFrom(&currentState);
+                nodesVisited.emplace_back(adj);
+                adj->setCameFrom(currentState);
                 stateQ.push(adj);
             }
         }
         //could not find path from requested initial to goal.
-        return vector<State<T>>();
+        return tempVec;
 
     }
 

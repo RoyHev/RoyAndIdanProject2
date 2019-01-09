@@ -17,75 +17,86 @@
 
 class Matrix : public Searchable<Point> {
 private:
-    vector<vector<double>> matrix;
-    State<Point> initialState;
-    State<Point> goalState;
+    vector<vector<State<Point> *>> matrix;
+    State<Point> *initialState;
+    State<Point> *goalState;
     size_t rows;
     size_t columns;
 
 public:
 
-    Matrix(Point initial, Point goal, vector<vector<double>> mat):
-    initialState(State<Point>(initial)), goalState(State<Point>(goal)){
+    Matrix(Point initial, Point goal, vector<vector<State<Point> *>> mat) {
+        this->initialState = new State<Point>(initial);
+        this->goalState = new State<Point>(goal);
         this->matrix = mat;
-        this->goalState.setCost(mat[goal.getLeft()][goal.getRight()]);
-        this->initialState.setCost(mat[initial.getLeft()][initial.getRight()]);
+        this->goalState->setCost(mat[goal.getLeft()][goal.getRight()]->getCost
+                ());
+        this->initialState->setCost(mat[initial.getLeft()][initial.getRight()]
+                                            ->getCost());
         this->rows = matrix.size();
         this->columns = matrix[FIRST_COLUMN].size();
     }
 
-    State<Point> getInitialState(){
-            return this->initialState;
-    }
-    State<Point> getGoalState(){
-            return this->goalState;
+    State<Point> *getInitialState() {
+        return this->initialState;
     }
 
-    vector<State<Point>> getPossibleStates(State<Point> fromState) override {
-            vector<State<Point>> possibleStates;
-            double i = fromState.getState().getLeft();
-            double j = fromState.getState().getRight();
-            //checks if the indexes are out of the matrix's bounds.
-            if (i < 0 || j < 0 ||  i >= rows || j>= columns){
-                    perror("Out of Bounds.");
-                    exit(1);
-            }
-            //not first row add above.
-            if (i != 0 && matrix[i-1][j] != INFINITY){
-                    Point tempPoint(i-1,j);
-                    State<Point> tempState(tempPoint);
-                    tempState.setCost(this->matrix[i-1][j]);
-                    tempState.setCameFrom(&fromState);
-                    possibleStates.emplace_back(tempState);
-            }
-            //not first column add left.
-            if (j != 0 && matrix[i][j-1] != INFINITY){
-                    Point tempPoint(i,j-1);
-                    State<Point> tempState(tempPoint);
-                    tempState.setCost(this->matrix[i][j-1]);
-                    tempState.setCameFrom(&fromState);
-                    possibleStates.emplace_back(tempState);
-            }
-            //not last row, add below
-            if (i != this->rows - 1 && matrix[i+1][j] != INFINITY){
-                    Point tempPoint(i+1,j);
-                    State<Point> tempState(tempPoint);
-                    tempState.setCost(this->matrix[i+1][j]);
-                    tempState.setCameFrom(&fromState);
-                    possibleStates.emplace_back(tempState);
-            }
-            //not last column, add right
-            if (j != this->columns - 1 && matrix[i][j+1] != INFINITY){
-                    Point tempPoint(i,j+1);
-                    State<Point> tempState(tempPoint);
-                    tempState.setCost(this->matrix[i][j+1]);
-                    tempState.setCameFrom(&fromState);
-                    possibleStates.emplace_back(tempState);
-            }
-            return possibleStates;
+    State<Point> *getGoalState() {
+        return this->goalState;
+    }
+
+    State<Point> *getStateByPoint(Point p1) {
+        return matrix[p1.getLeft()][p1.getRight()];
 
     }
 
+    vector<State<Point> *> getPossibleStates(State<Point> *fromState) override {
+        vector<State<Point> *> possibleStates;
+        double i = fromState->getState().getLeft();
+        double j = fromState->getState().getRight();
+        //checks if the indexes are out of the matrix's bounds.
+        if (i < 0 || j < 0 || i >= rows || j >= columns) {
+            perror("Out of Bounds.");
+            exit(1);
+        }
+        //not first row add above.
+        if (i != 0 && matrix[i - 1][j]->getCost() != INFINITY) {
+            Point tempPoint(i - 1, j);
+            State<Point> *tempState = getStateByPoint(tempPoint);
+            if (tempState->getCameFrom() == nullptr) {
+                tempState->setCameFrom(fromState);
+            }
+            possibleStates.emplace_back(tempState);
+        }
+        //not first column add left.
+        if (j != 0 && matrix[i][j - 1]->getCost() != INFINITY) {
+            Point tempPoint(i, j - 1);
+            State<Point> *tempState = getStateByPoint(tempPoint);
+            if (tempState->getCameFrom() == nullptr) {
+                tempState->setCameFrom(fromState);
+            }
+            possibleStates.emplace_back(tempState);
+        }
+        //not last row, add below
+        if (i != this->rows - 1 && matrix[i + 1][j]->getCost() != INFINITY) {
+            Point tempPoint(i + 1, j);
+            State<Point> *tempState = getStateByPoint(tempPoint);
+            if (tempState->getCameFrom() == nullptr) {
+                tempState->setCameFrom(fromState);
+            }
+            possibleStates.emplace_back(tempState);
+        }
+        //not last column, add right
+        if (j != this->columns - 1 && matrix[i][j + 1]->getCost() != INFINITY) {
+            Point tempPoint(i, j + 1);
+            State<Point> *tempState = getStateByPoint(tempPoint);
+            if (tempState->getCameFrom() == nullptr) {
+                tempState->setCameFrom(fromState);
+            }
+            possibleStates.emplace_back(tempState);
+        }
+        return possibleStates;
+    }
 };
 
 

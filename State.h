@@ -38,8 +38,8 @@ public:
         this->cameFrom = state;
     }
 
-    bool equalsTo(State state2) {
-        if (this->state == state2.getState()) {
+    bool equalsTo(State* state2) {
+        if (this->state == state2->getState()) {
             return true;
         } else {
             return false;
