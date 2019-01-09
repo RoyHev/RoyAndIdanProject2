@@ -11,6 +11,7 @@ private:
     int left;
     int right;
 public:
+
     Point(int l, int r);
     void setRight(int right);
     void setLeft(int left);

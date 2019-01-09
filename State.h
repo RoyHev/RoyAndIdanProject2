@@ -13,8 +13,7 @@ private:
     State<T> *cameFrom;
     bool visited;
 public:
-    State(T state) {
-        this->state = state;
+    State(T state) : state(state){
         this->visited = false;
     }
 
