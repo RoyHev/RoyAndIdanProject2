@@ -35,7 +35,7 @@ public:
             unorderedSetClose.insert(temp);
             if (temp == searchable->getGoalState()){
                 while (!temp.equalsTo(searchable->getInitialState())){
-                    temp = temp.getCameFrom();
+                    temp = *temp.getCameFrom();
                     path.insert(path.begin(), temp);
                 }
                 return path;
@@ -51,7 +51,7 @@ public:
             }
         }
         //could not find path from requested initial to goal.
-        return nullptr;
+        return vector<State<T>>();
     }
 };
 

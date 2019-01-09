@@ -21,10 +21,10 @@ public:
         while (!stateStack.empty()) {
             currentState = stateStack.top();
             stateStack.pop();
-            if (currentState == searchable->getGoalState()) {
+            if (currentState.equalsTo(searchable->getGoalState())) {
                 //restore the path and return it.
-                while (!(currentState == searchable->getInitialState())) {
-                    currentState = currentState.getCameFrom();
+                while (!(currentState.equalsTo(searchable->getInitialState()))) {
+                    currentState = *currentState.getCameFrom();
                     path.insert(path.begin(), currentState);
                 }
                 return path;
@@ -43,11 +43,9 @@ public:
                 adj.setCameFrom(&currentState);
                 stateStack.push(adj);
             }
-
         }
         //could not find path from requested initial to goal.
-        return nullptr;
-
+        return vector<State<T>>();
     }
 };
 

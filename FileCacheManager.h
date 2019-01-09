@@ -8,18 +8,16 @@
 
 #include "CacheManager.h"
 #include <map>
+#include <string>
 
-class FileCacheManager : public CacheManager<class P, class S> {
-    std::map<S, P> cacheMap;
+class FileCacheManager : public CacheManager {
+    std::map<std::string, std::string> cacheMap;
 public:
-    template<class P>
-    bool solutionExists(P problem);
+    bool solutionExists(string problem) override;
 
-    template<class P, class S>
-    S getSolution(P problem);
+    string getSolution(string problem) override;
 
-    template<class P, class S>
-    void saveSolution(P problem, S solution);
+    void saveSolution(string problem, string solution) override;
 
 };
 

@@ -18,28 +18,28 @@ public:
         queue<State<T>> stateQ;
         currentState.setVisited(true);
         currentState.setCameFrom(nullptr);
-        stateQ.push_back(currentState);
+        stateQ.push(currentState);
         while (!stateQ.empty()) {
             currentState = stateQ.front();
-            if (currentState == goalState) {
-                while (!(currentState == goalState)) {
-                    currentState = currentState.getCameFrom();
+            if (currentState.equalsTo(goalState)) {
+                while (!(currentState.equalsTo(goalState))) {
+                    currentState = *currentState.getCameFrom();
                     path.insert(path.begin(), currentState);
                 }
                 return path;
             }
-            stateQ.pop_front();
+            stateQ.pop();
             for (State<T> adj : searchable->getPossibleStates(currentState)) {
                 if (adj.getVisited()) {
                     continue;
                 }
                 adj.setVisited(true);
                 adj.setCameFrom(&currentState);
-                stateQ.push_back(adj);
+                stateQ.push(adj);
             }
         }
         //could not find path from requested initial to goal.
-        return nullptr;
+        return vector<State<T>>();
 
     }
 

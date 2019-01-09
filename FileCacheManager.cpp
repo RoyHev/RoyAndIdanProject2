@@ -4,26 +4,22 @@
 
 #include "FileCacheManager.h"
 
-template<class P>
-bool FileCacheManager::solutionExists(P problem) {
-    if (this->cacheMap.find(problem) != cacheMap.end()) {
+bool FileCacheManager::solutionExists(string problem) {
+    if (this->cacheMap.find(problem) == cacheMap.end()){
+        return false;
+    } else {
         return true;
     }
-    return false;
 }
 
-template<class P, class S>
-S FileCacheManager::getSolution(P problem) {
-    if (solutionExists(problem)) {
+string FileCacheManager::getSolution(string problem) {
+    if (solutionExists(problem)){
         return cacheMap.find(problem)->second;
+    } else {
+        perror("No solution for given Problem.");
     }
-    throw std::runtime_error("couldn't find solution for this problem");
 }
 
-template<class P, class S>
-void FileCacheManager::saveSolution(P problem, S solution) {
-    //TODO - what to do if the given problem is already exists?
-    if (!solutionExists(problem)) {
-        this->cacheMap.insert(std::make_pair(problem, solution));
-    }
+void FileCacheManager::saveSolution(string problem, string solution) {
+    this->cacheMap.insert(make_pair(problem,solution));
 }

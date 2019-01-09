@@ -26,7 +26,7 @@ private:
 public:
 
     Matrix(Point initial, Point goal, vector<vector<double>> mat):
-    initialState(State<Point>(initial)), goalState(State<Point>(initial)){
+    initialState(State<Point>(initial)), goalState(State<Point>(goal)){
         this->matrix = mat;
         this->goalState.setCost(mat[goal.getLeft()][goal.getRight()]);
         this->initialState.setCost(mat[initial.getLeft()][initial.getRight()]);
@@ -41,10 +41,10 @@ public:
             return this->goalState;
     }
 
-    vector<State<Point>> getPossibleStates(State<Point>* fromState){
+    vector<State<Point>> getPossibleStates(State<Point> fromState) override {
             vector<State<Point>> possibleStates;
-            double i = fromState->getState().getLeft();
-            double j = fromState->getState().getRight();
+            double i = fromState.getState().getLeft();
+            double j = fromState.getState().getRight();
             //checks if the indexes are out of the matrix's bounds.
             if (i < 0 || j < 0 ||  i >= rows || j>= columns){
                     perror("Out of Bounds.");
@@ -55,7 +55,7 @@ public:
                     Point tempPoint(i-1,j);
                     State<Point> tempState(tempPoint);
                     tempState.setCost(this->matrix[i-1][j]);
-                    tempState.setCameFrom(fromState);
+                    tempState.setCameFrom(&fromState);
                     possibleStates.emplace_back(tempState);
             }
             //not first column add left.
@@ -63,7 +63,7 @@ public:
                     Point tempPoint(i,j-1);
                     State<Point> tempState(tempPoint);
                     tempState.setCost(this->matrix[i][j-1]);
-                    tempState.setCameFrom(fromState);
+                    tempState.setCameFrom(&fromState);
                     possibleStates.emplace_back(tempState);
             }
             //not last row, add below
@@ -71,7 +71,7 @@ public:
                     Point tempPoint(i+1,j);
                     State<Point> tempState(tempPoint);
                     tempState.setCost(this->matrix[i+1][j]);
-                    tempState.setCameFrom(fromState);
+                    tempState.setCameFrom(&fromState);
                     possibleStates.emplace_back(tempState);
             }
             //not last column, add right
@@ -79,10 +79,11 @@ public:
                     Point tempPoint(i,j+1);
                     State<Point> tempState(tempPoint);
                     tempState.setCost(this->matrix[i][j+1]);
-                    tempState.setCameFrom(fromState);
+                    tempState.setCameFrom(&fromState);
                     possibleStates.emplace_back(tempState);
             }
             return possibleStates;
+
     }
 
 };
