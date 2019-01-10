@@ -52,8 +52,8 @@ public:
 
     vector<State<Point> *> getPossibleStates(State<Point> *fromState) override {
         vector<State<Point> *> possibleStates;
-        double i = fromState->getState().getLeft();
-        double j = fromState->getState().getRight();
+        int i = fromState->getState().getLeft();
+        int j = fromState->getState().getRight();
         //checks if the indexes are out of the matrix's bounds.
         if (i < 0 || j < 0 || i >= rows || j >= columns) {
             perror("Out of Bounds.");

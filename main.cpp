@@ -17,9 +17,9 @@ using namespace std;
 int main() {
     vector<vector<State<Point> *>> vec;
     double num = 1;
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < 4; i++) {
         vector<State<Point> *> tempVec;
-        for (int j = 0; j < 3; j++) {
+        for (int j = 0; j < 4; j++) {
             State<Point> *state = new State<Point>(Point(i, j));
             state->setCost(num);
             tempVec.push_back(state);
@@ -28,10 +28,13 @@ int main() {
         vec.push_back(tempVec);
     }
     Point p1(0, 0);
-    Point p2(2, 2);
+    Point p2(3, 3);
     Searchable<Point> *s = new Matrix(p1, p2, vec);
-    Searcher<Point> *searcher = new DepthFirstSearch<Point>();
+    //Searcher<Point> *searcher = new DepthFirstSearch<Point>();
     vector<State<Point> *> solution;
-    solution = searcher->search(s);
+    //solution = searcher->search(s);
+
+    Searcher<Point> *searcherBest = new BestFirstSearch<Point>();
+    solution = searcherBest->search(s);
     return 0;
 }
