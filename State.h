@@ -17,15 +17,7 @@ public:
         this->visited = false;
     }
 
-    void setVisited(bool didVisit){
-        this->visited = didVisit;
-    }
-
-    bool getVisited(){
-        return this->visited;
-    }
-
-    State(T state, double cost) {
+    State(T state, double cost) : state(state) {
         this->state = state;
         this->cost = cost;
     }

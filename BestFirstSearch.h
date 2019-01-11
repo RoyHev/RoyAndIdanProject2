@@ -11,6 +11,13 @@
 
 template<class T>
 class BestFirstSearch : public Searcher<T> {
+    class StateCompare {
+    public:
+        bool operator()(State<T> *left, State<T> *right) {
+            return (left->getCost() > right->getCost());
+        }
+    };
+
 public:
     bool hasNodeBeenVisited(vector<State<T> *> nodesVec, State<T> *node) {
         for (State<T> *state : nodesVec) {
@@ -21,8 +28,9 @@ public:
         return false;
     }
 
-    bool isNodeInQueue(priority_queue<State<T> *, vector<State<T> *>,
-            greater<State<T> *>> priorityQueue, State<T> *node) {
+    bool isNodeInQueue(
+            priority_queue<State<T> *, vector<State<T> *>, StateCompare> priorityQueue,
+            State<T> *node) {
         while (!priorityQueue.empty()) {
             if (node->equalsTo(priorityQueue.top())) {
                 return true;
@@ -36,9 +44,9 @@ public:
         vector<State<T> *> nodesVisited;
         vector<State<T> *> tempVec;
         vector<State<T> *> vectorPath;
-        unordered_set<State<T> *> pathSet;
 
-        priority_queue<State<T> *, vector<State<T> *>, greater<State<T> *>> priorityQueueOpen;
+        priority_queue<State<T> *, vector<State<T> *>, StateCompare>
+                priorityQueueOpen;
 
         vector<State<T> *> path;
         State<T> *currentState = searchable->getInitialState();
@@ -49,8 +57,13 @@ public:
             priorityQueueOpen.pop();
             if (currentState->equalsTo(searchable->getGoalState())) {
                 vectorPath.push_back(currentState);
-                //TODO return
-
+                path.insert(path.begin(), currentState);
+                while (!(currentState->equalsTo(
+                        searchable->getInitialState()))) {
+                    currentState = currentState->getCameFrom();
+                    path.insert(path.begin(), currentState);
+                }
+                return path;
             } else {
                 for (State<T> *adj : searchable->getPossibleStates(
                         currentState)) {
@@ -59,7 +72,7 @@ public:
                         continue;
                     } else {
                         adj->setCameFrom(currentState);
-                        priorityQueueOpen.push(adj);
+                        priorityQueueOpen.emplace(adj);
                     }
                 }
                 nodesVisited.emplace_back(currentState);

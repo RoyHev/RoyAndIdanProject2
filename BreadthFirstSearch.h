@@ -36,7 +36,7 @@ public:
 
             currentState = stateQ.front();
             if (currentState->equalsTo(goalState)) {
-                path.insert(path.begin(), goalState);
+                path.insert(path.begin(), currentState);
                 while (!(currentState->equalsTo(
                         searchable->getInitialState()))) {
                     currentState = currentState->getCameFrom();

@@ -34,7 +34,7 @@ public:
             currentState = stateStack.top();
             stateStack.pop();
             if (currentState->equalsTo(searchable->getGoalState())) {
-                path.insert(path.begin(), searchable->getGoalState());
+                path.insert(path.begin(), currentState);
                 //restore the path and return it.
                 while (!(currentState->equalsTo(
                         searchable->getInitialState()))) {
