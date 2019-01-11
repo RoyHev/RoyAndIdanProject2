@@ -14,7 +14,7 @@ class BestFirstSearch : public Searcher<T> {
     class StateCompare {
     public:
         bool operator()(State<T> *left, State<T> *right) {
-            return (left->getCost() > right->getCost());
+            return (left->getPathCost() > right->getPathCost());
         }
     };
 
@@ -40,23 +40,30 @@ public:
         return false;
     }
 
+    State<T>* getNodesFromQueue( priority_queue<State<T> *, vector<State<T>*>, StateCompare> priorityQueue, State<T>
+            *node){
+        while (!priorityQueue.empty()) {
+            if (node->equalsTo(priorityQueue.top())) {
+                return priorityQueue.top();
+            }
+            priorityQueue.pop();
+        }
+        return nullptr;
+    }
+
     vector<State<T> *> search(Searchable<T> *searchable) override {
         vector<State<T> *> nodesVisited;
-        vector<State<T> *> tempVec;
-        vector<State<T> *> vectorPath;
-
-        priority_queue<State<T> *, vector<State<T> *>, StateCompare>
-                priorityQueueOpen;
-
+        priority_queue<State<T> *, vector<State<T> *>, StateCompare>open;
         vector<State<T> *> path;
         State<T> *currentState = searchable->getInitialState();
         currentState->setCameFrom(currentState);
-        priorityQueueOpen.push(currentState);
-        while (!priorityQueueOpen.empty()) {
-            currentState = priorityQueueOpen.top();
-            priorityQueueOpen.pop();
+        currentState->setPathCost(currentState->getCost());
+        open.push(currentState);
+        while (!open.empty()) {
+            currentState = open.top();
+            open.pop();
             if (currentState->equalsTo(searchable->getGoalState())) {
-                vectorPath.push_back(currentState);
+                nodesVisited.push_back(currentState);
                 path.insert(path.begin(), currentState);
                 while (!(currentState->equalsTo(
                         searchable->getInitialState()))) {
@@ -65,22 +72,32 @@ public:
                 }
                 return path;
             } else {
-                for (State<T> *adj : searchable->getPossibleStates(
-                        currentState)) {
+                for (State<T> *adj : searchable->getPossibleStates(currentState)) {
+                    //gets the current adjacent State
+                    double adjPathCost = currentState->getPathCost()+adj->getCost();
                     if (hasNodeBeenVisited(nodesVisited, adj) ||
-                        isNodeInQueue(priorityQueueOpen, adj)) {
+                        isNodeInQueue(open, adj)) {
+                        if (!hasNodeBeenVisited(nodesVisited, adj)
+                        &&isNodeInQueue(open, adj)) {
+                            //compares the lowest cost of the same State with 2 different paths to it.
+                            if (adjPathCost <= adj->getPathCost()) {
+                                adj->setCameFrom(currentState);
+                                adj->setPathCost(adjPathCost);
+                                open.emplace(adj);
+                            }
+                        }
                         continue;
                     } else {
+                        adj->setPathCost(adjPathCost);
                         adj->setCameFrom(currentState);
-                        priorityQueueOpen.emplace(adj);
+                        open.emplace(adj);
                     }
                 }
                 nodesVisited.emplace_back(currentState);
-                vectorPath.push_back(currentState);
             }
         }
         //could not find path from requested initial to goal.
-        return tempVec;
+        return path;
     }
 };
 

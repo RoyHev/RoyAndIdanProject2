@@ -10,16 +10,25 @@ class State {
 private:
     T state;
     double cost;
+    double pathCost;
     State<T> *cameFrom;
-    bool visited;
 public:
     State(T state) : state(state){
-        this->visited = false;
+        this->pathCost = -1;
     }
 
     State(T state, double cost) : state(state) {
         this->state = state;
         this->cost = cost;
+        this->pathCost = -1;
+    }
+
+    void setPathCost(double pathCost) {
+        State::pathCost = pathCost;
+    }
+
+    double getPathCost() const {
+        return pathCost;
     }
 
     void setCost(double cost) {
