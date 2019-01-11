@@ -55,7 +55,7 @@ public:
         while (!priorityQueueOpen.empty()) {
             currentState = priorityQueueOpen.top();
             priorityQueueOpen.pop();
-            if (currentState->equalsTo(searchable->getGoalState())) {
+            if (currentState->equalsTo(searchable->getGoalState())) {s
                 vectorPath.push_back(currentState);
                 path.insert(path.begin(), currentState);
                 while (!(currentState->equalsTo(
