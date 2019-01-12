@@ -11,7 +11,9 @@
 #include <string>
 #include <fstream>
 
-template <class P, class S>
+#define PROB_SOL_DELIMITER '$'
+
+template<class P, class S>
 class FileCacheManager : public CacheManager<P, S> {
     string fileName;
     std::map<std::string, std::string> cacheMap;
@@ -19,7 +21,7 @@ public:
     FileCacheManager(const string &fileName) : fileName(fileName) {}
 
     bool solutionExists(P problem) override {
-        if (this->cacheMap.find(problem) == cacheMap.end()){
+        if (this->cacheMap.find(problem) == cacheMap.end()) {
             return false;
         } else {
             return true;
@@ -27,7 +29,7 @@ public:
     }
 
     S getSolution(P problem) override {
-        if (solutionExists(problem)){
+        if (solutionExists(problem)) {
             return cacheMap.at(problem);
         } else {
             perror("No solution for given Problem.");
@@ -35,18 +37,40 @@ public:
     }
 
     void saveSolution(P problem, S solution) override {
-        this->cacheMap.insert(make_pair(problem,solution));
+        this->cacheMap.insert(make_pair(problem, solution));
     }
 
-    void writeToFile(P problem,S solution){
+    /**
+     * writes a pair (problem and its solution) to the cache text File.
+     * @param problem describes problem
+     * @param solution describes solution
+     */
+    void writeToFile(P problem, S solution) {
         ofstream ofstream;
-        ofstream.open(fileName, ios::out| ios::app);
-        if (ofstream.is_open()){
-            ofstream << (string)problem << "!?!?!?" << (string)solution<<endl;
+        ofstream.open(fileName, ios::out | ios::app);
+        if (ofstream.is_open()) {
+            ofstream << (string) problem << PROB_SOL_DELIMITER << (string) solution << endl;
             ofstream.close();
-        }else { perror("couldn't open cache File");}
+        } else { perror("couldn't open cache File"); }
     }
 
+    /**
+     * loads all the problems and their solutions from cache text file to the map.
+     */
+    void loadFromFile() {
+        ifstream ifstream;
+        ifstream.open(fileName);
+        if (ifstream.is_open()) {
+            for (string probSolution; getline(ifstream, probSolution);) {
+                string thisProblem = probSolution.substr(0, probSolution.find(PROB_SOL_DELIMITER));
+                string thisSolution = probSolution.substr(
+                        (probSolution.find(PROB_SOL_DELIMITER) + 1),
+                        probSolution.size() -
+                        (thisProblem.size() + 1));
+                this->cacheMap.insert(make_pair(thisProblem, thisSolution));
+            }
+        } else { perror("couldn't open cache File"); }
+    }
 };
 
 
