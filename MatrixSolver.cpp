@@ -33,3 +33,4 @@ string MatrixSolver::getPathInstructions(vector<State<Point> *> path) {
             ->getState());
     return pathInstructions;
 }
+
