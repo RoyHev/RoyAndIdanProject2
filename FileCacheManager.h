@@ -57,6 +57,7 @@ public:
     /**
      * loads all the problems and their solutions from cache text file to the map.
      */
+    //TODO GENERICS or string !?
     void loadFromFile() {
         ifstream ifstream;
         ifstream.open(fileName);
