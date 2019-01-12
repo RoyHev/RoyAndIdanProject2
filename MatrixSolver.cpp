@@ -34,3 +34,5 @@ string MatrixSolver::getPathInstructions(vector<State<Point> *> path) {
     return pathInstructions;
 }
 
+MatrixSolver::MatrixSolver(Searcher<Point> *searchAlgorithm) : searchAlgorithm(searchAlgorithm) {}
+

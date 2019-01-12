@@ -18,13 +18,15 @@
 #define COMMA ", "
 
 class MatrixSolver : public Solver<Searchable<Point> *, string> {
-    Searcher<Point> *searchAlgorithm;
+    Searcher<Point> *searchAlgorithm{};
 
     string getNextStep(Point previous, Point next);
 
     string getPathInstructions(vector<State<Point> *> path);
 
 public:
+    MatrixSolver(Searcher<Point> *searchAlgorithm);
+
     string solve(Searchable<Point> *problem) override;
 
 };
