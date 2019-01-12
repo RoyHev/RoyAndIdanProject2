@@ -8,12 +8,15 @@
 #include "State.h"
 #include "Point.h"
 #include <vector>
+#include <string>
 
 using namespace std;
 
 template<class T>
 class Searchable {
 public:
+    virtual operator string() const = 0;
+
     virtual State<T> *getInitialState() = 0;
 
     virtual State<T> *getGoalState() = 0;

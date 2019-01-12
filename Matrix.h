@@ -8,11 +8,16 @@
 #include <utility>
 #include <cstdio>
 #include <cstdlib>
+#include <string>
 #include "Searchable.h"
 #include "Point.h"
 
 #define FIRST_COLUMN 0
 #define INFINITY -1
+#define SPACE " "
+#define LINE_DELIMITER "|"
+#define MATRIX_POINTS_DELIMITER ";"
+#define INDEXES_DELIMITER ","
 
 
 class Matrix : public Searchable<Point> {
@@ -37,11 +42,11 @@ public:
         this->columns = matrix[FIRST_COLUMN].size();
     }
 
-    State<Point> *getInitialState() {
+    State<Point> *getInitialState() override {
         return this->initialState;
     }
 
-    State<Point> *getGoalState() {
+    State<Point> *getGoalState() override {
         return this->goalState;
     }
 
@@ -96,6 +101,31 @@ public:
             possibleStates.emplace_back(tempState);
         }
         return possibleStates;
+    }
+
+    //in order to write the problem into a file, we need to overload the string operator.
+    operator string() const override {
+        string problem;
+        //creates a string of the indexes of each initial and goal state in the form - i1,j1,i2,j2.
+        string indexes = to_string(initialState->getState().getLeft()) + INDEXES_DELIMITER + to_string
+                (initialState->getState().getRight()) + INDEXES_DELIMITER + to_string(goalState->getState().getLeft())
+                 + INDEXES_DELIMITER + to_string(goalState->getState().getRight());
+        /*
+         * Goes over the matrix and saves it as a string following the rules below:
+         * Each node is separated by a SPACE.
+         * Each line is separated by a OR operator - |
+         * Between the matrix and the indexes of inital and goal states is a semicolon ';'.
+         */
+        for (size_t i = 0; i< rows; i++){
+            for (size_t j = 0; j<columns; j++){
+                problem += to_string(matrix.at(i).at(j)->getCost());
+                    problem += SPACE;
+            }
+            problem += LINE_DELIMITER;
+        }
+        problem += MATRIX_POINTS_DELIMITER;
+        problem += indexes;
+        return problem;
     }
 };
 
