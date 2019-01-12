@@ -80,7 +80,7 @@ public:
                         if (!hasNodeBeenVisited(nodesVisited, adj)
                         &&isNodeInQueue(open, adj)) {
                             //compares the lowest cost of the same State with 2 different paths to it.
-                            if (adjPathCost <= adj->getPathCost()) {
+                            if (adjPathCost < adj->getPathCost()) {
                                 //if cheaper path found - update it
                                 adj->setCameFrom(currentState);
                                 adj->setPathCost(adjPathCost);
