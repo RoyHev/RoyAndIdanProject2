@@ -40,7 +40,7 @@ public:
         return false;
     }
 
-
+    //TODO - check if we can remove the line that sets initial's came from to itself !!
     vector<State<T> *> search(Searchable<T> *searchable) override {
         //keeps the nodes we've already traveled in
         vector<State<T> *> nodesVisited;

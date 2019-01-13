@@ -18,7 +18,10 @@ class FileCacheManager : public CacheManager<P, S> {
     string fileName;
     std::map<std::string, std::string> cacheMap;
 public:
-    FileCacheManager(const string &fileName) : fileName(fileName) {}
+    FileCacheManager(const string &fileName) : fileName(fileName) {
+        //loads all the problems with their solutions to cacheMap.
+        loadFromFile();
+    }
 
     bool solutionExists(P problem) override {
         if (this->cacheMap.find(problem) == cacheMap.end()) {
@@ -38,6 +41,7 @@ public:
 
     void saveSolution(P problem, S solution) override {
         this->cacheMap.insert(make_pair(problem, solution));
+        writeToFile(problem, solution);
     }
 
     /**

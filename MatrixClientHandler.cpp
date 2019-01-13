@@ -65,7 +65,8 @@ string MatrixClientHandler::getMatrixSolution(Matrix *matrix) {
     //if the problem has previously been solved and saved, return the solution.
     if (this->cacheManager->solutionExists(*matrix)){
         return cacheManager->getSolution(*matrix);
-        //solve the problem save the solution and return the path.
+        //solves the problem and saves the problem and its solution in the map and writes
+        //it to the cache text file.
     } else {
         string matrixSolution = this->matrixSolver.solve(matrix);
         cacheManager->saveSolution(*matrix, matrixSolution);
