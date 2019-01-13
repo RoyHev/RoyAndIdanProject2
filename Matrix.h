@@ -82,18 +82,18 @@ public:
             }
             possibleStates.emplace_back(tempState);
         }
-        //not last row, add below
-        if (i != this->rows - 1 && matrix[i + 1][j]->getCost() != INFINITY) {
-            Point tempPoint(i + 1, j);
+        //not last column, add right
+        if (j != this->columns - 1 && matrix[i][j + 1]->getCost() != INFINITY) {
+            Point tempPoint(i, j + 1);
             State<Point> *tempState = getStateByPoint(tempPoint);
             if (tempState->getCameFrom() == nullptr) {
                 tempState->setCameFrom(fromState);
             }
             possibleStates.emplace_back(tempState);
         }
-        //not last column, add right
-        if (j != this->columns - 1 && matrix[i][j + 1]->getCost() != INFINITY) {
-            Point tempPoint(i, j + 1);
+        //not last row, add below
+        if (i != this->rows - 1 && matrix[i + 1][j]->getCost() != INFINITY) {
+            Point tempPoint(i + 1, j);
             State<Point> *tempState = getStateByPoint(tempPoint);
             if (tempState->getCameFrom() == nullptr) {
                 tempState->setCameFrom(fromState);

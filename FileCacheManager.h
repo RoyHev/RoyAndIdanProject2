@@ -28,7 +28,7 @@ public:
         }
     }
 
-    S getSolution(P problem) override {
+    string getSolution(P problem) override {
         if (solutionExists(problem)) {
             return cacheMap.at(problem);
         } else {
@@ -73,6 +73,8 @@ public:
         } else { perror("couldn't open cache File"); }
     }
 };
+
+//TODO - קריאה וכתיבה מקובץ
 
 
 #endif //ROYANDIDANPROJECT2_FILECACHEMANAGER_H

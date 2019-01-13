@@ -16,6 +16,8 @@ using namespace std;
 #include "MatrixSolver.h"
 
 int main() {
+
+
     vector<vector<State<Point> *>> vec;
     State<Point> *s1 = new State<Point>(Point(0, 0), 1);
     State<Point> *s2 = new State<Point>(Point(0, 1), 2);

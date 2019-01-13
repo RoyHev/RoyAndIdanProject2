@@ -9,6 +9,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+#define SPACE ' '
+
 
 void ServerCommunication::writeToServer(int socketNum, string info) {
     //TODO - delete if not needed (works properly).
@@ -37,6 +39,10 @@ vector<string> ServerCommunication::readFromServer(int socketNum) {
             perror("Could not read from Server.");
         }
         while(c != ENTER){
+            if (c == SPACE){
+                read(socketNum, &c, READ_CHAR);
+                continue;
+            }
             temp += c;
             read(socketNum, &c, READ_CHAR);
         }
