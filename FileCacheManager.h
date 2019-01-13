@@ -12,6 +12,7 @@
 #include <fstream>
 
 #define PROB_SOL_DELIMITER '$'
+using namespace std;
 
 template<class P, class S>
 class FileCacheManager : public CacheManager<P, S> {
@@ -53,12 +54,15 @@ public:
      * @param solution describes solution
      */
     void writeToFile(P problem, S solution) {
-        ofstream ofstream;
-        ofstream.open(fileName, ios::out | ios::app);
-        if (ofstream.is_open()) {
-            ofstream << (string) problem << PROB_SOL_DELIMITER << (string) solution << endl;
-            ofstream.close();
-        } else { perror("couldn't open cache File"); }
+        ofstream outputStream;
+        outputStream.open(fileName, ios::out | ios::app);
+        if (outputStream.is_open()) {
+            outputStream << (string) problem << PROB_SOL_DELIMITER << (string) solution << endl;
+            outputStream.close();
+        } else {
+            perror("couldn't open cache File");
+            exit(1);
+        }
     }
 
     /**
@@ -66,11 +70,11 @@ public:
      */
     //TODO GENERICS or string !?
     void loadFromFile() {
-        ifstream ifstream;
-        ifstream.open(fileName);
-        if (ifstream.is_open()) {
+        ifstream inputStream;
+        inputStream.open(fileName);
+        if (!inputStream.bad()) {
             //reads from file each line and loads it to the map.
-            for (string probSolution; getline(ifstream, probSolution);) {
+            for (string probSolution; getline(inputStream, probSolution);) {
                 string thisProblem = probSolution.substr(0, probSolution.find(PROB_SOL_DELIMITER));
                 string thisSolution = probSolution.substr(
                         (probSolution.find(PROB_SOL_DELIMITER) + 1),
@@ -79,11 +83,11 @@ public:
                 //creates a pair of problem and solution to add to the map.
                 this->cacheMap.insert(make_pair(thisProblem, thisSolution));
             }
-        } else { perror("couldn't open cache File"); }
+        } else {
+            perror("couldn't open cache File");
+            exit(1);
+        }
     }
 };
-
-//TODO - קריאה וכתיבה מקובץ
-
 
 #endif //ROYANDIDANPROJECT2_FILECACHEMANAGER_H
