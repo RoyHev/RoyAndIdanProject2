@@ -11,6 +11,12 @@
 template<class T>
 class DepthFirstSearch : public Searcher<T> {
 public:
+    /**
+     * checks whether or not a node has already been visited during the algorithm.
+     * @param nodesVec - vector consisting of nodes that have already been visited.
+     * @param node - node to check if was visited.
+     * @return - returns true if visited false otherwise.
+     */
     bool hasNodeBeenVisited(vector<State<T> *> nodesVec, State<T> *node) {
         for (State<T> *state : nodesVec) {
             if (state->equalsTo(node)) {

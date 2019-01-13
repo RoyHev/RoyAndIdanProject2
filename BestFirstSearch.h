@@ -11,6 +11,7 @@
 
 template<class T>
 class BestFirstSearch : public Searcher<T> {
+    //inner class to use in the priority queue in the algorithm.
     class StateCompare {
     public:
         bool operator()(State<T> *left, State<T> *right) {
@@ -19,6 +20,12 @@ class BestFirstSearch : public Searcher<T> {
     };
 
 public:
+    /**
+     * Checks whether or not a specific node has been visited during the BFS algorithm.
+     * @param nodesVec - vector of nodes that have been visited.
+     * @param node - node to check if visited.
+     * @return - true if it is false otherwise.
+     */
     bool hasNodeBeenVisited(vector<State<T> *> nodesVec, State<T> *node) {
         for (State<T> *state : nodesVec) {
             if (state->equalsTo(node)) {
@@ -27,10 +34,13 @@ public:
         }
         return false;
     }
-
+    /**
+     * Checks whether or not a specific state is in the priority queue. If so, returns true else false.
+     */
     bool isNodeInQueue(
             priority_queue<State<T> *, vector<State<T> *>, StateCompare> priorityQueue,
             State<T> *node) {
+        //goes over the queue until it's empty.
         while (!priorityQueue.empty()) {
             if (node->equalsTo(priorityQueue.top())) {
                 return true;

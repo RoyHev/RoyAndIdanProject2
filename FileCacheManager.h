@@ -23,6 +23,7 @@ public:
         loadFromFile();
     }
 
+    // checks whether or not the problem has already been solved.
     bool solutionExists(P problem) override {
         if (this->cacheMap.find(problem) == cacheMap.end()) {
             return false;
@@ -31,6 +32,7 @@ public:
         }
     }
 
+    //returns the solution to a specific problem.
     string getSolution(P problem) override {
         if (solutionExists(problem)) {
             return cacheMap.at(problem);
@@ -39,6 +41,7 @@ public:
         }
     }
 
+    //saves a solution and a problem in the map.
     void saveSolution(P problem, S solution) override {
         this->cacheMap.insert(make_pair(problem, solution));
         writeToFile(problem, solution);
@@ -66,12 +69,14 @@ public:
         ifstream ifstream;
         ifstream.open(fileName);
         if (ifstream.is_open()) {
+            //reads from file each line and loads it to the map.
             for (string probSolution; getline(ifstream, probSolution);) {
                 string thisProblem = probSolution.substr(0, probSolution.find(PROB_SOL_DELIMITER));
                 string thisSolution = probSolution.substr(
                         (probSolution.find(PROB_SOL_DELIMITER) + 1),
                         probSolution.size() -
                         (thisProblem.size() + 1));
+                //creates a pair of problem and solution to add to the map.
                 this->cacheMap.insert(make_pair(thisProblem, thisSolution));
             }
         } else { perror("couldn't open cache File"); }
