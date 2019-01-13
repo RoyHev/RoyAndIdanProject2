@@ -34,12 +34,14 @@ public:
         this->initialState = new State<Point>(initial);
         this->goalState = new State<Point>(goal);
         this->matrix = mat;
-        this->goalState->setCost(mat[goal.getLeft()][goal.getRight()]->getCost
-                ());
-        this->initialState->setCost(mat[initial.getLeft()][initial.getRight()]
-                                            ->getCost());
+        this->goalState->setCost(mat[goal.getLeft()][goal.getRight()]->getCost());
+        this->initialState->setCost(mat[initial.getLeft()][initial.getRight()]->getCost());
         this->rows = matrix.size();
         this->columns = matrix[FIRST_COLUMN].size();
+    }
+
+    vector<vector<State<Point> *>> &getMatrix(){
+        return matrix;
     }
 
     State<Point> *getInitialState() override {
@@ -103,6 +105,14 @@ public:
         return possibleStates;
     }
 
+    size_t getRows() const {
+        return rows;
+    }
+
+    size_t getColumns() const {
+        return columns;
+    }
+
     //in order to write the problem into a file, we need to overload the string operator.
     operator string() const override {
         string problem;
@@ -126,6 +136,11 @@ public:
         problem += MATRIX_POINTS_DELIMITER;
         problem += indexes;
         return problem;
+    }
+
+    ~Matrix(){
+        delete(initialState);
+        delete(goalState);
     }
 };
 
