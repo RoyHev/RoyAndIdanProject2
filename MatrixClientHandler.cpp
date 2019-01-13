@@ -75,7 +75,6 @@ string MatrixClientHandler::getMatrixSolution(Matrix *matrix) {
 }
 
 MatrixClientHandler::~MatrixClientHandler() {
-    for (unsigned long i = 0; i < this.)
 
 }
 
