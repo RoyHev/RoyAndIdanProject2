@@ -92,6 +92,7 @@ void server_side::ParallelServer::start(int serverSocket, ClientHandler &clientH
         if (newsockfd < 0) {
             //time out, close the server.
             if (errno == EWOULDBLOCK || errno == EAGAIN){
+                cout << "timed out" << endl;
                 break;
             }
             perror("ERROR Could Not Accept From Socket");
@@ -104,7 +105,7 @@ void server_side::ParallelServer::start(int serverSocket, ClientHandler &clientH
         }
         //handle the client.
         handle(newsockfd,clientHandler);
-        timeOut.tv_sec = 10;
+        timeOut.tv_sec = 100;
 
         if (setsockopt(serverSocket, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeOut, sizeof(timeOut)) < 0)   {
             perror("ERROR on setting timeOut");
