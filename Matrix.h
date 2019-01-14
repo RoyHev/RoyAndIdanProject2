@@ -9,16 +9,17 @@
 #include <cstdio>
 #include <cstdlib>
 #include <string>
+#include <cmath>
 #include "Searchable.h"
 #include "Point.h"
 
 #define FIRST_COLUMN 0
-#define INFINITY -1
+#define INFINITE_PATH -1
 #define SPACE " "
 #define LINE_DELIMITER "|"
 #define MATRIX_POINTS_DELIMITER ";"
 #define INDEXES_DELIMITER ","
-
+#define SQUARE_TWO 2
 
 class Matrix : public Searchable<Point> {
 private:
@@ -40,7 +41,7 @@ public:
         this->columns = matrix[FIRST_COLUMN].size();
     }
 
-    vector<vector<State<Point> *>> &getMatrix(){
+    vector<vector<State<Point> *>> &getMatrix() {
         return matrix;
     }
 
@@ -67,7 +68,7 @@ public:
             exit(1);
         }
         //not first row add above.
-        if (i != 0 && matrix[i - 1][j]->getCost() != INFINITY) {
+        if (i != 0 && matrix[i - 1][j]->getCost() != INFINITE_PATH) {
             Point tempPoint(i - 1, j);
             State<Point> *tempState = getStateByPoint(tempPoint);
             if (tempState->getCameFrom() == nullptr) {
@@ -76,7 +77,7 @@ public:
             possibleStates.emplace_back(tempState);
         }
         //not first column add left.
-        if (j != 0 && matrix[i][j - 1]->getCost() != INFINITY) {
+        if (j != 0 && matrix[i][j - 1]->getCost() != INFINITE_PATH) {
             Point tempPoint(i, j - 1);
             State<Point> *tempState = getStateByPoint(tempPoint);
             if (tempState->getCameFrom() == nullptr) {
@@ -85,7 +86,7 @@ public:
             possibleStates.emplace_back(tempState);
         }
         //not last column, add right
-        if (j != this->columns - 1 && matrix[i][j + 1]->getCost() != INFINITY) {
+        if (j != this->columns - 1 && matrix[i][j + 1]->getCost() != INFINITE_PATH) {
             Point tempPoint(i, j + 1);
             State<Point> *tempState = getStateByPoint(tempPoint);
             if (tempState->getCameFrom() == nullptr) {
@@ -94,7 +95,7 @@ public:
             possibleStates.emplace_back(tempState);
         }
         //not last row, add below
-        if (i != this->rows - 1 && matrix[i + 1][j]->getCost() != INFINITY) {
+        if (i != this->rows - 1 && matrix[i + 1][j]->getCost() != INFINITE_PATH) {
             Point tempPoint(i + 1, j);
             State<Point> *tempState = getStateByPoint(tempPoint);
             if (tempState->getCameFrom() == nullptr) {
@@ -117,19 +118,21 @@ public:
     operator string() const override {
         string problem;
         //creates a string of the indexes of each initial and goal state in the form - i1,j1,i2,j2.
-        string indexes = to_string(initialState->getState().getLeft()) + INDEXES_DELIMITER + to_string
-                (initialState->getState().getRight()) + INDEXES_DELIMITER + to_string(goalState->getState().getLeft())
-                 + INDEXES_DELIMITER + to_string(goalState->getState().getRight());
+        string indexes =
+                to_string(initialState->getState().getLeft()) + INDEXES_DELIMITER + to_string
+                        (initialState->getState().getRight()) + INDEXES_DELIMITER +
+                to_string(goalState->getState().getLeft())
+                + INDEXES_DELIMITER + to_string(goalState->getState().getRight());
         /*
          * Goes over the matrix and saves it as a string following the rules below:
          * Each node is separated by a SPACE.
          * Each line is separated by a OR operator - |
          * Between the matrix and the indexes of inital and goal states is a semicolon ';'.
          */
-        for (size_t i = 0; i< rows; i++){
-            for (size_t j = 0; j<columns; j++){
+        for (size_t i = 0; i < rows; i++) {
+            for (size_t j = 0; j < columns; j++) {
                 problem += to_string(matrix.at(i).at(j)->getCost());
-                    problem += SPACE;
+                problem += SPACE;
             }
             problem += LINE_DELIMITER;
         }
@@ -139,7 +142,7 @@ public:
     }
 
     //copy constructor.
-    Matrix(const Matrix& matrix)    {
+    Matrix(const Matrix &matrix) {
         this->initialState = new State<Point>(*matrix.initialState);
         this->goalState = new State<Point>(*matrix.goalState);
         this->matrix = matrix.matrix;
@@ -149,10 +152,16 @@ public:
         this->columns = matrix.columns;
     }
 
+    double findDistance(State<Point> *state1, State<Point> *state2) override {
+        double difX = state1->getState().getLeft() - state2->getState().getLeft();
+        double difY = state1->getState().getRight() - state2->getState().getRight();
+        return sqrt(pow(difX, SQUARE_TWO) + pow(difY, SQUARE_TWO));
+    }
+
     //destructor
-    ~Matrix(){
-        delete(initialState);
-        delete(goalState);
+    ~Matrix() {
+        delete (initialState);
+        delete (goalState);
     }
 };
 
