@@ -29,6 +29,8 @@ public:
 
     string solve(Searchable<Point> *problem) override;
 
+    string NodesCostsSolution(Searchable<Point> *problem);
+
 };
 
 

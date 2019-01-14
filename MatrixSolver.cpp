@@ -4,6 +4,10 @@
 
 #include "MatrixSolver.h"
 
+//constructor.
+MatrixSolver::MatrixSolver(Searcher<Point> *searchAlgorithm) : searchAlgorithm(searchAlgorithm) {}
+
+
 /**
  * Solve the matrix and return a string of the path consisting of directions up down left or right.
  *
@@ -15,6 +19,7 @@ string MatrixSolver::solve(Searchable<Point> *problem) {
     path = this->searchAlgorithm->search(problem);
     return getPathInstructions(path);
 }
+
 /**
  * returns which way in the matrix we need to go in order to get from the previous to the current node.
  *
@@ -58,6 +63,16 @@ string MatrixSolver::getPathInstructions(vector<State<Point> *> path) {
     return pathInstructions;
 }
 
-//constructor.
-MatrixSolver::MatrixSolver(Searcher<Point> *searchAlgorithm) : searchAlgorithm(searchAlgorithm) {}
+
+string MatrixSolver::NodesCostsSolution(Searchable<Point> *problem) {
+    string matrixSolution = "";
+    vector<State<Point> *> path;
+    path = this->searchAlgorithm->search(problem);
+    string tempSolution = getPathInstructions(path);
+    matrixSolution +=
+            "Evaluated Nodes Number: " + to_string(this->searchAlgorithm->getNumOfNodes()) + '\n';
+    matrixSolution +=
+            "Cost Solution: " + to_string((this->searchAlgorithm->getTotalPathCost())) + '\n';
+    return matrixSolution;
+}
 
