@@ -138,6 +138,7 @@ public:
         return problem;
     }
 
+    //copy constructor.
     Matrix(const Matrix& matrix)    {
         this->initialState = new State<Point>(*matrix.initialState);
         this->goalState = new State<Point>(*matrix.goalState);
@@ -148,7 +149,7 @@ public:
         this->columns = matrix.columns;
     }
 
-
+    //destructor
     ~Matrix(){
         delete(initialState);
         delete(goalState);

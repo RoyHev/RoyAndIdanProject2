@@ -8,7 +8,6 @@
 #include <string>
 #include <vector>
 
-#define SIZE 1024
 #define READ_CHAR 1
 #define END_PROBLEM "end"
 #define ENTER '\n'

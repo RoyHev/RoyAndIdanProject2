@@ -13,16 +13,18 @@ private:
     double pathCost{};
     State<T> *cameFrom;
 public:
+    //constructor with only a state.
     explicit State(T state) : state(state){
         this->pathCost = -1;
     }
 
-
+    //constructor also with a cost.
     State(T state, double cost) : state(state) {
         this->cost = cost;
         this->pathCost = -1;
     }
 
+    //sets the path cost up to it from the initial state.
     void setPathCost(double pathCost) {
         State::pathCost = pathCost;
     }
@@ -35,16 +37,13 @@ public:
         this->cost = cost;
     }
 
+    //set it's father node.
     void setCameFrom(State *state) {
         this->cameFrom = state;
     }
 
-    bool equalsTo(State* state2) {
-        if (this->state == state2->getState()) {
-            return true;
-        } else {
-            return false;
-        }
+    State<T> *getCameFrom() const {
+        return cameFrom;
     }
 
     double getCost() const {
@@ -55,43 +54,30 @@ public:
         return this->state;
     }
 
+    //checks equality between two states based on their state's.
+    bool equalsTo(State* state2) {
+        return (this->state == state2->getState());
+    }
+
+    //operator overloading below to check inequalities between the costs of each state.
     const bool operator==(const State &other) {
-        if (this->cost == other.getCost()) {
-            return true;
-        }
-        return false;
+        return (this->cost == other.getCost());
     }
 
     const bool operator<(const State &other) {
-        if (this->getCost() < other.getCost()) {
-            return true;
-        }
-        return false;
+        return (this->getCost() < other.getCost());
     }
 
     const bool operator>(const State &other) {
-        if (this->getCost() > other.getCost()) {
-            return true;
-        }
-        return false;
+        return (this->getCost() > other.getCost());
     }
 
     const bool operator<=(const State &other) {
-        if (this->getCost() <= other.getCost()) {
-            return true;
-        }
-        return false;
+        return (this->getCost() <= other.getCost());
     }
 
     const bool operator>=(const State &other) {
-        if (this->getCost() >= other.getCost()) {
-            return true;
-        }
-        return false;
-    }
-
-    State<T> *getCameFrom() const {
-        return cameFrom;
+        return (this->getCost() >= other.getCost());
     }
 };
 

@@ -4,13 +4,6 @@
 
 #include "Point.h"
 
-void Point::setRight(int right) {
-    this->right = right;
-}
-
-void Point::setLeft(int left) {
-    this->left = left;
-}
 
 int Point::getLeft() const {
     return left;
@@ -19,11 +12,12 @@ int Point::getLeft() const {
 int Point::getRight() const {
     return right;
 }
-
+//overloading operator == to check equality between two points.
 const bool Point::operator==(const Point &second) const {
     return this->left == second.getLeft() && this->right == second.getRight();
 }
 
+//constructor.
 Point::Point(int l, int r) {
     this->left = l;
     this->right = r;

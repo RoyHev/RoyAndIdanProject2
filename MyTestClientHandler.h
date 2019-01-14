@@ -10,8 +10,9 @@
 #include "Solver.h"
 #include "CacheManager.h"
 
-template <class P, class S>
 
+//TODO - check if we need this class.
+template <class P, class S>
 class MyTestClientHandler : public ClientHandler{
     Solver<P,S> solver;
     CacheManager<P,S>* cacheManager;

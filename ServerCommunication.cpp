@@ -11,7 +11,11 @@
 
 #define SPACE ' '
 
-
+/**
+ * Writes the solution of a problem to the server.
+ * @param socketNum - socket to write to.
+ * @param info - path to write.
+ */
 void ServerCommunication::writeToServer(int socketNum, string info) {
     ssize_t n = write(socketNum, info.c_str(), (info.size()));
     if (n < 0) {
@@ -20,7 +24,11 @@ void ServerCommunication::writeToServer(int socketNum, string info) {
     }
 }
 
-
+/**
+ * Reads the problem from the server and returns it as a vector of strings.
+ * @param socketNum - socket to read from.
+ * @return - returns a vector of the problem.
+ */
 vector<string> ServerCommunication::readFromServer(int socketNum) {
     vector<string> problemInfo;
     char c;
@@ -32,6 +40,7 @@ vector<string> ServerCommunication::readFromServer(int socketNum) {
         if (n < 0) {
             perror("Could not read from Server.");
         }
+        //go over each line and put it into the vector.
         while(c != ENTER){
             if (c == SPACE){
                 read(socketNum, &c, READ_CHAR);
@@ -40,6 +49,7 @@ vector<string> ServerCommunication::readFromServer(int socketNum) {
             temp += c;
             read(socketNum, &c, READ_CHAR);
         }
+        //temp == "end" means that the problem is finished and we can finish the function.
         if (temp == END_PROBLEM){
             break;
         }

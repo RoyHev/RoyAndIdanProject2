@@ -67,6 +67,11 @@ void server_side::ParallelServer::stop() {
 
 }
 
+/**
+ * start connection to the server to handle the client.
+ * @param serverSocket - socket to connect to.
+ * @param clientHandler - specific client handler.
+ */
 void server_side::ParallelServer::start(int serverSocket, ClientHandler &clientHandler) {
     int newsockfd;
     int clilen;
@@ -76,6 +81,7 @@ void server_side::ParallelServer::start(int serverSocket, ClientHandler &clientH
     timeOut.tv_usec = 0;
 
     while(true){
+        //setting the time out.
         timeOut.tv_sec = 0;
 
 
@@ -84,6 +90,7 @@ void server_side::ParallelServer::start(int serverSocket, ClientHandler &clientH
                 (socklen_t *) &clilen);
 
         if (newsockfd < 0) {
+            //time out, close the server.
             if (errno == EWOULDBLOCK || errno == EAGAIN){
                 break;
             }
@@ -95,7 +102,7 @@ void server_side::ParallelServer::start(int serverSocket, ClientHandler &clientH
             perror("ERROR on setting timeOut");
             exit(1);
         }
-
+        //handle the client.
         handle(newsockfd,clientHandler);
         timeOut.tv_sec = 10;
 
@@ -104,6 +111,7 @@ void server_side::ParallelServer::start(int serverSocket, ClientHandler &clientH
             exit(1);
         }
     }
+    //close the server and join threads.
     stop();
 }
 

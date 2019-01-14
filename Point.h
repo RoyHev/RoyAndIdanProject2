@@ -13,8 +13,6 @@ private:
 public:
 
     Point(int l, int r);
-    void setRight(int right);
-    void setLeft(int left);
     int getRight() const;
     int getLeft() const;
     const bool operator==(const Point& second) const;

@@ -5,6 +5,10 @@
 #include <unistd.h>
 #include "MatrixClientHandler.h"
 
+/**
+ * Handles the client by creating the matrix of the problem and solving it.
+ * @param socketID - socket client is connected to.
+ */
 void MatrixClientHandler::handleClient(int socketID) {
     //get the problem info from the server.
     vector<string> problemInfo = this->serverCommunication.readFromServer(socketID);
@@ -14,6 +18,7 @@ void MatrixClientHandler::handleClient(int socketID) {
     serverCommunication.writeToServer(socketID, (getMatrixSolution(*matrix) + ENTER));
     //close the socket.
     close(socketID);
+    //release memory.
     vector<vector<State<Point> *>> mat = matrix->getMatrix();
     for (size_t i = 0; i < matrix->getRows(); i++){
         for (size_t j = 0; j< matrix->getColumns(); j++){
@@ -23,6 +28,10 @@ void MatrixClientHandler::handleClient(int socketID) {
     delete (matrix);
 }
 
+/*
+ * Reads the problem and creates it into a matrix problem consisting of a matrix of doubles,
+ * an initial state and a goal state.
+ */
 Matrix *MatrixClientHandler::lexer(vector<string> problemInfo) {
     vector<vector<State<Point>*>> matrixVector;
     vector<int> nodeValues;
