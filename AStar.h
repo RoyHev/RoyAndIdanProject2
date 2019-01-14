@@ -10,6 +10,9 @@
 
 template<class T>
 class AStar : public Searcher<T> {
+    int numOfNodes;
+    double totalPathCost;
+
     //inner class to use in the priority queue in the algorithm.
     class StateCompare {
     public:
@@ -20,6 +23,11 @@ class AStar : public Searcher<T> {
     };
 
 public:
+
+    AStar(){
+        numOfNodes = 0;
+        totalPathCost = 0;
+    }
 
     /**
  * Checks whether or not a specific node has been visited during the BFS algorithm.
@@ -73,8 +81,7 @@ public:
             //if the are no more paths to check to the destination node then return the path to it
             if (currentState->equalsTo(searchable->getGoalState())) {
                 path.insert(path.begin(), currentState);
-                while (!(currentState->equalsTo(
-                        searchable->getInitialState()))) {
+                while (!(currentState->equalsTo(searchable->getInitialState()))) {
                     currentState = currentState->getCameFrom();
                     path.insert(path.begin(), currentState);
                 }
@@ -119,6 +126,14 @@ public:
             }
         }
         return path;
+    }
+
+    int getNumOfNodes() const {
+        return numOfNodes;
+    }
+
+    double getTotalPathCost() const {
+        return totalPathCost;
     }
 };
 

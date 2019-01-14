@@ -10,6 +10,8 @@
 
 template<class T>
 class BestFirstSearch : public Searcher<T> {
+    int numOfNodes;
+    double totalPathCost;
     //inner class to use in the priority queue in the algorithm.
     class StateCompare {
     public:
@@ -19,6 +21,11 @@ class BestFirstSearch : public Searcher<T> {
     };
 
 public:
+
+    BestFirstSearch(){
+        numOfNodes = 0;
+        totalPathCost = 0;
+    }
     /**
      * Checks whether or not a specific node has been visited during the BFS algorithm.
      * @param nodesVec - vector of nodes that have been visited.
@@ -110,6 +117,14 @@ public:
         }
         //could not find path from requested initial to goal.
         return path;
+    }
+
+    int getNumOfNodes() const {
+        return numOfNodes;
+    }
+
+    double getTotalPathCost() const {
+        return totalPathCost;
     }
 };
 

@@ -13,7 +13,14 @@ using namespace std;
 
 template<class T>
 class BreadthFirstSearch : public Searcher<T> {
+    int numOfNodes;
+    double totalPathCost;
 public:
+    BreadthFirstSearch(){
+        numOfNodes = 0;
+        totalPathCost = 0;
+    }
+
     /**
      * Checks if the node has already been visited during the BFS scan.
      * @param nodesVec - vector of nodes that have been visited.
@@ -71,6 +78,14 @@ public:
         }
         //could not find path from requested initial to goal.
         return path;
+    }
+
+    int getNumOfNodes() const {
+        return numOfNodes;
+    }
+
+    double getTotalPathCost() const {
+        return totalPathCost;
     }
 
 };

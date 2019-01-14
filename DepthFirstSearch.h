@@ -8,9 +8,18 @@
 #include "Searcher.h"
 #include <stack>
 
+using namespace std;
 template<class T>
 class DepthFirstSearch : public Searcher<T> {
+    int numOfNodes;
+    double totalPathCost;
 public:
+
+    DepthFirstSearch(){
+        numOfNodes = 0;
+        totalPathCost = 0;
+    }
+
     /**
      * checks whether or not a node has already been visited during the algorithm.
      * @param nodesVec - vector consisting of nodes that have already been visited.
@@ -66,6 +75,14 @@ public:
         }
         //could not find path from requested initial to goal.
         return tempVec;
+    }
+
+    int getNumOfNodes() const {
+        return numOfNodes;
+    }
+
+    double getTotalPathCost() const {
+        return totalPathCost;
     }
 };
 

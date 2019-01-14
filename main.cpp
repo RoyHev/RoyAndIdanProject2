@@ -17,10 +17,11 @@ using namespace std;
 #include "MatrixClientHandler.h"
 #include "Server.h"
 #include "ParallelServer.h"
+#include "AStar.h"
 
 int main() {
 
-    Searcher<Point> *bfs = new BestFirstSearch<Point>;
+    Searcher<Point> *bfs = new AStar<Point>;
     MatrixSolver matrixSolver(bfs);
     MatrixClientHandler matrixClientHandler(matrixSolver);
     server_side::ParallelServer parallelServer;
