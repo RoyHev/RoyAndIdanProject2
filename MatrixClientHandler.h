@@ -30,7 +30,7 @@ public:
     }
     void handleClient(int socketID) override;
     Matrix* lexer(vector<string> problemInfo);
-    string getMatrixSolution(Matrix *matrix);
+    string getMatrixSolution(Matrix matrix);
     ~MatrixClientHandler();
 
 private:

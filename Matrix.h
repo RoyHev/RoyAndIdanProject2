@@ -141,6 +141,11 @@ public:
     Matrix(const Matrix& matrix)    {
         this->initialState = new State<Point>(*matrix.initialState);
         this->goalState = new State<Point>(*matrix.goalState);
+        this->matrix = matrix.matrix;
+        this->goalState->setCost(matrix.goalState->getCost());
+        this->initialState->setCost(matrix.initialState->getCost());
+        this->rows = matrix.rows;
+        this->columns = matrix.columns;
     }
 
 

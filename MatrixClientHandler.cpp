@@ -11,7 +11,7 @@ void MatrixClientHandler::handleClient(int socketID) {
     //create the matrix.
     Matrix *matrix = lexer(problemInfo);
     //send the solution back to server.
-    serverCommunication.writeToServer(socketID, (getMatrixSolution(matrix) + ENTER));
+    serverCommunication.writeToServer(socketID, (getMatrixSolution(*matrix) + ENTER));
     //close the socket.
     close(socketID);
     vector<vector<State<Point> *>> mat = matrix->getMatrix();
@@ -69,15 +69,15 @@ vector<int> MatrixClientHandler::splitString(string info) {
 }
 
 
-string MatrixClientHandler::getMatrixSolution(Matrix *matrix) {
+string MatrixClientHandler::getMatrixSolution(Matrix matrix) {
     //if the problem has previously been solved and saved, return the solution.
-    if (this->cacheManager->solutionExists(*matrix)){
-        return cacheManager->getSolution(*matrix);
+    if (this->cacheManager->solutionExists(matrix)){
+        return cacheManager->getSolution(matrix);
         //solves the problem and saves the problem and its solution in the map and writes
         //it to the cache text file.
     } else {
-        string matrixSolution = this->matrixSolver.solve(matrix);
-        cacheManager->saveSolution(*matrix, matrixSolution);
+        string matrixSolution = this->matrixSolver.solve(&matrix);
+        cacheManager->saveSolution(matrix, matrixSolution);
         return matrixSolution;
     }
 }
