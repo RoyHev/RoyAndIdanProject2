@@ -26,7 +26,7 @@ public:
 
     // checks whether or not the problem has already been solved.
     bool solutionExists(P problem) override {
-        if (this->cacheMap.find((string)problem) == cacheMap.end()) {
+        if (this->cacheMap.find((string) problem) == cacheMap.end()) {
             return false;
         } else {
             return true;
@@ -68,7 +68,6 @@ public:
     /**
      * loads all the problems and their solutions from cache text file to the map.
      */
-    //TODO GENERICS or string !?
     void loadFromFile() {
         ifstream inputStream;
         inputStream.open(fileName);
@@ -83,6 +82,7 @@ public:
                 //creates a pair of problem and solution to add to the map.
                 this->cacheMap.insert(make_pair(thisProblem, thisSolution));
             }
+            inputStream.close();
         } else {
             perror("couldn't open cache File");
             exit(1);
