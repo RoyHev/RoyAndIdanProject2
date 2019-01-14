@@ -7,9 +7,13 @@
 
 #include "Server.h"
 
+#include <queue>
+#include <thread>
+
 namespace server_side {
     class ParallelServer : public Server {
     private:
+        std::queue <std::thread> threadsQueue;
         int sockfd;
     public:
         ParallelServer(){

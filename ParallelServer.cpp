@@ -53,20 +53,28 @@ void server_side::ParallelServer::open(int portNum, ClientHandler &clientHandler
 }
 
 void server_side::ParallelServer::stop() {
+    //closes the socket.
     if (sockfd != -1){
         close(sockfd);
+    }
+    //join the threads and pop them from the queue.
+    while (!this->threadsQueue.empty()){
+        threadsQueue.front().join();
+        threadsQueue.pop();
     }
 
 }
 
-void server_side::ParallelServer::start(int serverSocket,
-                                        ClientHandler &clientHandler) {
+void server_side::ParallelServer::start(int serverSocket, ClientHandler &clientHandler) {
     int newsockfd;
     int clilen;
     struct sockaddr_in cli_addr;
     clilen = sizeof(cli_addr);
+    timeval timeOut;
+    timeOut.tv_usec = 0;
 
-    while (true) {
+    while(true){
+        timeOut.tv_sec = 0;
 
 
         /* Accept actual connection from the client */
@@ -74,13 +82,27 @@ void server_side::ParallelServer::start(int serverSocket,
                 (socklen_t *) &clilen);
 
         if (newsockfd < 0) {
+            if (errno == EWOULDBLOCK || errno == EAGAIN){
+                break;
+            }
             perror("ERROR Could Not Accept From Socket");
             exit(1);
         }
 
-        handle(newsockfd,clientHandler);
-    }
+        if (setsockopt(newsockfd, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeOut, sizeof(timeOut)) < 0)   {
+            perror("ERROR on setting timeOut");
+            exit(1);
+        }
 
+        handle(newsockfd,clientHandler);
+        timeOut.tv_sec = 10;
+
+        if (setsockopt(serverSocket, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeOut, sizeof(timeOut)) < 0)   {
+            perror("ERROR on setting timeOut");
+            exit(1);
+        }
+    }
+    stop();
 }
 
 static void handleSpecificClient(int clientSocket, ClientHandler *clientHandler){
@@ -89,10 +111,7 @@ static void handleSpecificClient(int clientSocket, ClientHandler *clientHandler)
 
 void server_side::ParallelServer::handle(int clientSocket,
                                           ClientHandler &clientHandler) {
-
-    std::thread thread(handleSpecificClient,clientSocket,&clientHandler);
-    thread.detach();
-
+    this->threadsQueue.push(std::thread(handleSpecificClient,clientSocket,&clientHandler));
 }
 
 //TODO - check timed out if needed.

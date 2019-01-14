@@ -23,6 +23,6 @@ int main() {
     MatrixSolver matrixSolver(new BestFirstSearch<Point>);
     MatrixClientHandler matrixClientHandler(matrixSolver);
     server_side::ParallelServer parallelServer;
-    parallelServer.open(5401, matrixClientHandler);
+    parallelServer.open(5402, matrixClientHandler);
     return 0;
 }

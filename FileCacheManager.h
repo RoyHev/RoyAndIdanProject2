@@ -26,7 +26,7 @@ public:
 
     // checks whether or not the problem has already been solved.
     bool solutionExists(P problem) override {
-        if (this->cacheMap.find(problem) == cacheMap.end()) {
+        if (this->cacheMap.find((string)problem) == cacheMap.end()) {
             return false;
         } else {
             return true;
