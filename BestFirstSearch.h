@@ -68,7 +68,6 @@ public:
             open.pop();
             //if the are no more paths to check to the destination node then return the path to it
             if (currentState->equalsTo(searchable->getGoalState())) {
-                nodesVisited.push_back(currentState);
                 path.insert(path.begin(), currentState);
                 while (!(currentState->equalsTo(
                         searchable->getInitialState()))) {
@@ -90,6 +89,7 @@ public:
                         if (!hasNodeBeenVisited(nodesVisited, adj)
                         &&isNodeInQueue(open, adj)) {
                             //compares the lowest cost of the same State with 2 different paths to it.
+                            //TODO - to remove the old one ?
                             if (adjPathCost < adj->getPathCost()) {
                                 //if cheaper path found - update it
                                 adj->setCameFrom(currentState);
