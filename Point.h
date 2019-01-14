@@ -17,7 +17,7 @@ public:
     void setLeft(int left);
     int getRight() const;
     int getLeft() const;
-    const bool operator==(const Point& second);
+    const bool operator==(const Point& second) const;
 
 };
 

@@ -9,16 +9,16 @@ template<class T>
 class State {
 private:
     T state;
-    double cost;
-    double pathCost;
+    double cost{};
+    double pathCost{};
     State<T> *cameFrom;
 public:
-    State(T state) : state(state){
+    explicit State(T state) : state(state){
         this->pathCost = -1;
     }
 
+
     State(T state, double cost) : state(state) {
-        this->state = state;
         this->cost = cost;
         this->pathCost = -1;
     }

@@ -17,10 +17,10 @@ void MatrixClientHandler::handleClient(int socketID) {
     vector<vector<State<Point> *>> mat = matrix->getMatrix();
     for (size_t i = 0; i < matrix->getRows(); i++){
         for (size_t j = 0; j< matrix->getColumns(); i++){
-            delete(mat[i][j]);
+//            delete(mat[i][j]);
         }
     }
-    delete (matrix);
+//    delete (matrix);
 }
 
 Matrix *MatrixClientHandler::lexer(vector<string> problemInfo) {
@@ -55,14 +55,15 @@ vector<int> MatrixClientHandler::splitString(string info) {
     vector<int> nodeValues;
     string temp;
     //go over the vector until a comma is seen and then push it to the node values.
-    for (unsigned long i = 0; i < temp.length(); i++) {
-        if (info.at(i) == COMMA_DELIMITER){
+    for (unsigned long i = 0; i < info.length(); i++) {
+        if (info.at(i) != COMMA_DELIMITER){
+            temp += info.at(i);
+        } else {
             nodeValues.push_back(stoi(temp));
             temp.erase();
-            continue;
         }
-        temp += info.at(i);
     }
+    nodeValues.push_back(stoi(temp));
     //returns the node values of the string within the vector that was given to us from the server.
     return nodeValues;
 }

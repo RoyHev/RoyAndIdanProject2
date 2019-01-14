@@ -25,8 +25,8 @@ private:
     vector<vector<State<Point> *>> matrix;
     State<Point> *initialState;
     State<Point> *goalState;
-    size_t rows;
-    size_t columns;
+    size_t rows{};
+    size_t columns{};
 
 public:
 
@@ -137,6 +137,12 @@ public:
         problem += indexes;
         return problem;
     }
+
+    Matrix(const Matrix& matrix)    {
+        this->initialState = new State<Point>(*matrix.initialState);
+        this->goalState = new State<Point>(*matrix.goalState);
+    }
+
 
     ~Matrix(){
         delete(initialState);

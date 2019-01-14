@@ -20,7 +20,7 @@ using namespace std;
 
 int main() {
 
-    MatrixSolver matrixSolver(new DepthFirstSearch<Point>);
+    MatrixSolver matrixSolver(new BestFirstSearch<Point>);
     MatrixClientHandler matrixClientHandler(matrixSolver);
     server_side::ParallelServer parallelServer;
     parallelServer.open(5401, matrixClientHandler);

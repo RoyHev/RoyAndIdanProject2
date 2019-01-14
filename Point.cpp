@@ -20,15 +20,11 @@ int Point::getRight() const {
     return right;
 }
 
-const bool Point::operator==(const Point &second) {
-    if (this->left == second.getLeft() && this->right == second.getRight()){
-        return true;
-    }
-    return false;
+const bool Point::operator==(const Point &second) const {
+    return this->left == second.getLeft() && this->right == second.getRight();
 }
 
 Point::Point(int l, int r) {
     this->left = l;
     this->right = r;
-
 }
