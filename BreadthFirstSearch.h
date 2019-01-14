@@ -54,16 +54,19 @@ public:
             //the node we are currently on is the goal node.
             if (currentState->equalsTo(goalState)) {
                 path.insert(path.begin(), currentState);
+                this->totalPathCost += currentState->getCost();
                 //restores the path from the initial to the goal.
                 while (!(currentState->equalsTo(
                         searchable->getInitialState()))) {
                     currentState = currentState->getCameFrom();
                     path.insert(path.begin(), currentState);
+                    this->totalPathCost += currentState->getCost();
                 }
                 //returns the path.
                 return path;
             }
             stateQ.pop();
+            this->numOfNodes += 1;
             //goes over all sons of the current state and expands them.
             for (State<T> *adj : searchable->getPossibleStates(currentState)) {
                 //already visited, continue.

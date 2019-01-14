@@ -48,13 +48,16 @@ public:
         while (!stateStack.empty()) {
             currentState = stateStack.top();
             stateStack.pop();
+            this->numOfNodes+=1;
             if (currentState->equalsTo(searchable->getGoalState())) {
                 path.insert(path.begin(), currentState);
+                this->totalPathCost += currentState->getCost();
                 //restore the path and return it.
                 while (!(currentState->equalsTo(
                         searchable->getInitialState()))) {
                     currentState = currentState->getCameFrom();
                     path.insert(path.begin(), currentState);
+                    this->totalPathCost += currentState->getCost();
                 }
                 return path;
             }
