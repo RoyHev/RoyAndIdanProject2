@@ -13,12 +13,6 @@
 
 
 void ServerCommunication::writeToServer(int socketNum, string info) {
-    //TODO - delete if not needed (works properly).
-//    char buffer[SIZE];
-//    bzero(buffer, SIZE);
-//    strcpy(buffer, info.c_str());
-    /* Send message to the server */
-//    ssize_t n = write(socketNum, buffer, strlen(buffer));
     ssize_t n = write(socketNum, info.c_str(), (info.size()));
     if (n < 0) {
         perror("Could not write to Server.");

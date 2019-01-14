@@ -23,6 +23,8 @@ void server_side::ParallelServer::open(int portNum, ClientHandler &clientHandler
     //First call to socket() function
     serverSockFD = socket(AF_INET, SOCK_STREAM, 0);
 
+    int n = 1;
+    setsockopt(serverSockFD, SOL_SOCKET, SO_REUSEADDR, (char *)&n, sizeof(int));
     if (serverSockFD < 0) {
         perror("ERROR Could Not Open Socket.");
         exit(1);
@@ -113,5 +115,3 @@ void server_side::ParallelServer::handle(int clientSocket,
                                           ClientHandler &clientHandler) {
     this->threadsQueue.push(std::thread(handleSpecificClient,clientSocket,&clientHandler));
 }
-
-//TODO - check timed out if needed.

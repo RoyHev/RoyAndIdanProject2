@@ -16,11 +16,11 @@ void MatrixClientHandler::handleClient(int socketID) {
     close(socketID);
     vector<vector<State<Point> *>> mat = matrix->getMatrix();
     for (size_t i = 0; i < matrix->getRows(); i++){
-        for (size_t j = 0; j< matrix->getColumns(); i++){
-//            delete(mat[i][j]);
+        for (size_t j = 0; j< matrix->getColumns(); j++){
+            delete(mat[i][j]);
         }
     }
-//    delete (matrix);
+    delete (matrix);
 }
 
 Matrix *MatrixClientHandler::lexer(vector<string> problemInfo) {
