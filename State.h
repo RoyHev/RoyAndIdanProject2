@@ -12,9 +12,12 @@ private:
     double cost{};
     double pathCost{};
     State<T> *cameFrom;
+    double distance;
+
+
 public:
     //constructor with only a state.
-    explicit State(T state) : state(state){
+    explicit State(T state) : state(state) {
         this->pathCost = -1;
     }
 
@@ -22,6 +25,14 @@ public:
     State(T state, double cost) : state(state) {
         this->cost = cost;
         this->pathCost = -1;
+    }
+
+    double getDistance() const {
+        return distance;
+    }
+
+    void setDistance(double distance) {
+        this->distance = distance;
     }
 
     //sets the path cost up to it from the initial state.
@@ -55,7 +66,7 @@ public:
     }
 
     //checks equality between two states based on their state's.
-    bool equalsTo(State* state2) {
+    bool equalsTo(State *state2) {
         return (this->state == state2->getState());
     }
 
