@@ -154,9 +154,9 @@ public:
 
     //TODO - check if this is the right calculation way !
     double findDistance(State<Point> *state1, State<Point> *state2) override {
-        double difX = state1->getState().getLeft() - state2->getState().getLeft();
-        double difY = state1->getState().getRight() - state2->getState().getRight();
-        return sqrt(pow(difX, SQUARE_TWO) + pow(difY, SQUARE_TWO));
+        double difX = abs(state1->getState().getLeft() - state2->getState().getLeft());
+        double difY = abs(state1->getState().getRight() - state2->getState().getRight());
+        return (difX) + (difY);
     }
 
     //destructor

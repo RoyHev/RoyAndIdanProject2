@@ -28,7 +28,7 @@ public:
     }
 
     double getDistance() const {
-        return distance;
+        return this->distance;
     }
 
     void setDistance(double distance) {
