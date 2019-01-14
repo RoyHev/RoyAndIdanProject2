@@ -14,6 +14,10 @@ class Searcher {
 public:
     virtual std::vector<State<T>*> search(Searchable<T> *searchable) = 0;
 
+    virtual double getTotalPathCost() const = 0;
+
+    virtual int getNumOfNodes() const = 0;
+
 };
 
 #endif //ROYANDIDANPROJECT2_SEARCHER_H
