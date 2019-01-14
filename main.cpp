@@ -20,9 +20,11 @@ using namespace std;
 
 int main() {
 
-    MatrixSolver matrixSolver(new BestFirstSearch<Point>);
+    Searcher<Point> *bfs = new BestFirstSearch<Point>;
+    MatrixSolver matrixSolver(bfs);
     MatrixClientHandler matrixClientHandler(matrixSolver);
     server_side::ParallelServer parallelServer;
     parallelServer.open(5402, matrixClientHandler);
+    delete(bfs);
     return 0;
 }

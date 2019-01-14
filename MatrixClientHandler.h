@@ -28,6 +28,11 @@ public:
     MatrixClientHandler(MatrixSolver matrixSolver) : matrixSolver(matrixSolver){
         this->cacheManager = new FileCacheManager<Matrix, string>(MATRIX_CACHE_FILE);
     }
+    //copy constructor
+    MatrixClientHandler(const MatrixClientHandler& mCH) : matrixSolver(mCH.matrixSolver){
+        this->cacheManager = new FileCacheManager<Matrix,string>(MATRIX_CACHE_FILE);
+
+    }
     void handleClient(int socketID) override;
     Matrix* lexer(vector<string> problemInfo);
     string getMatrixSolution(Matrix matrix);

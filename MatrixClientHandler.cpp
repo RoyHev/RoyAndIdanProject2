@@ -92,6 +92,7 @@ string MatrixClientHandler::getMatrixSolution(Matrix matrix) {
 }
 
 MatrixClientHandler::~MatrixClientHandler() {
+    delete(this->cacheManager);
 
 }
 

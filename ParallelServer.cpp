@@ -105,7 +105,7 @@ void server_side::ParallelServer::start(int serverSocket, ClientHandler &clientH
         }
         //handle the client.
         handle(newsockfd,clientHandler);
-        timeOut.tv_sec = 100;
+        timeOut.tv_sec = 10;
 
         if (setsockopt(serverSocket, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeOut, sizeof(timeOut)) < 0)   {
             perror("ERROR on setting timeOut");
