@@ -6,7 +6,6 @@
 #define ROYANDIDANPROJECT2_BESTFIRSTSEARCH_H
 
 #include <queue>
-#include <unordered_set>
 #include "Searcher.h"
 
 template<class T>
@@ -34,6 +33,7 @@ public:
         }
         return false;
     }
+
     /**
      * Checks whether or not a specific state is in the priority queue. If so, returns true else false.
      */
@@ -56,7 +56,7 @@ public:
         vector<State<T> *> nodesVisited;
         //keeps the nodes we need to travel in. sorts the nodes from the ones with the lowest path-cost to the highest
         // one
-        priority_queue<State<T> *, vector<State<T> *>, StateCompare>open;
+        priority_queue<State<T> *, vector<State<T> *>, StateCompare> open;
         //the final path from the source node to the destination node
         vector<State<T> *> path;
         State<T> *currentState = searchable->getInitialState();
@@ -78,8 +78,8 @@ public:
             } else {
                 //find all the adjacent nodes
                 for (State<T> *adj : searchable->getPossibleStates(currentState)) {
-                    //gets the current adjacent State
-                    double adjPathCost = currentState->getPathCost()+adj->getCost();
+                    //gets the current's adjacent State Path-Cost
+                    double adjPathCost = currentState->getPathCost() + adj->getCost();
                     /*
                      * if the node was already visited and we dont need to find a cheaper way to it - continue,
                      * but if the node was already visited and we can to find a cheaper way to it - check
@@ -87,9 +87,8 @@ public:
                     if (hasNodeBeenVisited(nodesVisited, adj) ||
                         isNodeInQueue(open, adj)) {
                         if (!hasNodeBeenVisited(nodesVisited, adj)
-                        &&isNodeInQueue(open, adj)) {
+                            && isNodeInQueue(open, adj)) {
                             //compares the lowest cost of the same State with 2 different paths to it.
-                            //TODO - to remove the old one ?
                             if (adjPathCost < adj->getPathCost()) {
                                 //if cheaper path found - update it
                                 adj->setCameFrom(currentState);

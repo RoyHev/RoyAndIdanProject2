@@ -51,7 +51,6 @@ void server_side::ParallelServer::open(int portNum, ClientHandler &clientHandler
     listen(serverSockFD, 5);
     this->sockfd = serverSockFD;
     start(serverSockFD,clientHandler);
-
 }
 
 void server_side::ParallelServer::stop() {

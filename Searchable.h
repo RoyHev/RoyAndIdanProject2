@@ -23,6 +23,8 @@ public:
 
     virtual vector<State<T> *> getPossibleStates(State<T> *fromState) = 0;
 
+    virtual double findDistance(State<T> *state1, State<T> *state2) = 0;
+
 
 };
 
