@@ -24,12 +24,12 @@ class AStar : public Searcher<T> {
 
 public:
 
-    AStar(){
+    AStar() {
         numOfNodes = 0;
         totalPathCost = 0;
     }
 
-    void resetMembers(){
+    void resetMembers() {
         this->totalPathCost = 0;
         this->numOfNodes = 0;
     }

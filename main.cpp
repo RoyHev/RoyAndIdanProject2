@@ -127,14 +127,14 @@ void loadFromFile() {
 
 
 int main() {
-//    loadFromFile();
-    Searcher<Point> *bfs = new AStar<Point>();
-    MatrixSolver matrixSolver(bfs);
-    MatrixClientHandler matrixClientHandler(matrixSolver);
-    server_side::ParallelServer parallelServer;
-    parallelServer.open(5402, matrixClientHandler);
-    std::cout << bfs->getNumOfNodes() << std::endl;
-    std::cout << bfs->getTotalPathCost() << std::endl;
-    delete(bfs);
+    loadFromFile();
+//    Searcher<Point> *bfs = new AStar<Point>();
+//    MatrixSolver matrixSolver(bfs);
+//    MatrixClientHandler matrixClientHandler(matrixSolver);
+//    server_side::ParallelServer parallelServer;
+//    parallelServer.open(5402, matrixClientHandler);
+//    std::cout << bfs->getNumOfNodes() << std::endl;
+//    std::cout << bfs->getTotalPathCost() << std::endl;
+//    delete(bfs);
     return 0;
 }

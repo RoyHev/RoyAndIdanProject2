@@ -156,7 +156,8 @@ public:
     double findDistance(State<Point> *state1, State<Point> *state2) override {
         double difX = abs(state1->getState().getLeft() - state2->getState().getLeft());
         double difY = abs(state1->getState().getRight() - state2->getState().getRight());
-        return (difX) + (difY);
+        double statesDistance = sqrt(pow((difX), SQUARE_TWO) + pow(difY, SQUARE_TWO));
+        return statesDistance;
     }
 
     //destructor
