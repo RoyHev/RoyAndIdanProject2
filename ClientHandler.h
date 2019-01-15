@@ -8,6 +8,7 @@
 class ClientHandler{
 public:
     virtual void handleClient(int socketID) = 0;
+    virtual ~ClientHandler() = default;
 };
 
 #endif //ROYANDIDANPROJECT2_CLIENTHANDLER_H

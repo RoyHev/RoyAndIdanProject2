@@ -56,15 +56,14 @@ string MatrixSolver::getPathInstructions(vector<State<Point> *> path) {
     for (unsigned long i = 1; i <= pathSize - 2; i++) {
         pathInstructions += getNextStep(path.at(i - 1)->getState(), path.at(i)->getState());
         //divide by a comma.
-        //TODO - change to COMMA
-        pathInstructions += COMMA2;
+        pathInstructions += COMMA;
     }
     pathInstructions += getNextStep(path.at(pathSize - 2)->getState(), path.at(pathSize - 1)
             ->getState());
     return pathInstructions;
 }
 
-
+//TODO - delete this later.
 string MatrixSolver::NodesCostsSolution(Searchable<Point> *problem) {
     string matrixSolution = "";
     vector<State<Point> *> path;

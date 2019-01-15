@@ -125,16 +125,28 @@ void loadFromFile() {
     inFile.close();
 }
 
+namespace boot{
+    class Main{
+    public:
+        int main(int argc,char** argv){
+            if(argc <= 1){
+                perror("port input is missing !");
+                return 0;
+            }
+            int portNum = stoi(argv[1]);
+            Searcher<Point> *searchAlgorithm = new AStar<Point>();
+            MatrixSolver matrixSolver(searchAlgorithm);
+            MatrixClientHandler matrixClientHandler(matrixSolver);
+            server_side::ParallelServer parallelServer;
+            parallelServer.open(portNum, matrixClientHandler);
+            delete(searchAlgorithm);
+            return 0;
+        }
+    };
+}
 
-int main() {
-    loadFromFile();
-//    Searcher<Point> *bfs = new AStar<Point>();
-//    MatrixSolver matrixSolver(bfs);
-//    MatrixClientHandler matrixClientHandler(matrixSolver);
-//    server_side::ParallelServer parallelServer;
-//    parallelServer.open(5402, matrixClientHandler);
-//    std::cout << bfs->getNumOfNodes() << std::endl;
-//    std::cout << bfs->getTotalPathCost() << std::endl;
-//    delete(bfs);
+int main(int argc,char** argv) {
+    boot::Main bootMain;
+    bootMain.main(argc,argv);
     return 0;
 }

@@ -43,6 +43,9 @@ public:
         }
     }
 
+    ~FileCacheManager() override = default;
+
+
     //saves a solution and a problem in the map.
     void saveSolution(P problem, S solution) override {
         this->cacheMap.insert(make_pair(problem, solution));

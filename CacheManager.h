@@ -16,6 +16,7 @@ public:
     virtual bool solutionExists(P problem) = 0;
     virtual S getSolution(P problem) = 0;
     virtual void saveSolution(P problem, S solution) = 0;
+    virtual ~CacheManager() = default;
 
 };
 

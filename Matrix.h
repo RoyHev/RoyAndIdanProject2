@@ -152,7 +152,6 @@ public:
         this->columns = matrix.columns;
     }
 
-    //TODO - check if this is the right calculation way !
     double findDistance(State<Point> *state1, State<Point> *state2) override {
         double difX = abs(state1->getState().getLeft() - state2->getState().getLeft());
         double difY = abs(state1->getState().getRight() - state2->getState().getRight());

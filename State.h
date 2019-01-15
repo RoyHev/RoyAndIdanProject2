@@ -9,8 +9,8 @@ template<class T>
 class State {
 private:
     T state;
-    double cost{};
-    double pathCost{};
+    double cost;
+    double pathCost;
     State<T> *cameFrom;
     double distance;
 
@@ -19,11 +19,13 @@ public:
     //constructor with only a state.
     explicit State(T state) : state(state) {
         this->pathCost = -1;
+        this->cameFrom = nullptr;
     }
 
     //constructor also with a cost.
     State(T state, double cost) : state(state) {
         this->cost = cost;
+        this->cameFrom = nullptr;
         this->pathCost = -1;
     }
 

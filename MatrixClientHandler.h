@@ -34,10 +34,10 @@ public:
 
     }
     void handleClient(int socketID) override;
-    //TODO - change lexer2 back to lexer.
     Matrix* lexer(vector<string> problemInfo);
     string getMatrixSolution(Matrix matrix);
-    ~MatrixClientHandler();
+
+    ~MatrixClientHandler() override;
 
 private:
     vector<int> splitString(string info);

@@ -18,6 +18,8 @@ public:
 
     virtual int getNumOfNodes() const = 0;
 
+    virtual ~Searcher() = default;
+
 };
 
 #endif //ROYANDIDANPROJECT2_SEARCHER_H
