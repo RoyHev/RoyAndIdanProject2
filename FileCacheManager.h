@@ -39,6 +39,7 @@ public:
             return cacheMap.at(problem);
         } else {
             perror("No solution for given Problem.");
+            return "";
         }
     }
 

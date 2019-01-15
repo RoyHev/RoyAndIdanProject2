@@ -76,7 +76,7 @@ Matrix *lexer(vector<string> problemInfo) {
  */
 void writeToFile(string algoName, string solution) {
     ofstream outputStream;
-    outputStream.open("SolutionExp.txt", ios::out | ios::app);
+    outputStream.open("solution.txt", ios::out | ios::app);
     if (outputStream.is_open()) {
         outputStream << algoName << ":\n";
         outputStream << solution << '\n';
@@ -108,11 +108,11 @@ void loadFromFile() {
     int matrixNum = 1;
     for (string line; getline(inFile, line);) {
         if (line == "@") {
-            writeToFile("matrix number " + to_string(matrixNum) + '\n' + "bfs",
-                        bfs.NodesCostsSolution(lexer(problem)));
+            writeToFile("matrix number " + to_string(matrixNum) + '\n' + "BEST FIRST",
+                        bestfs.NodesCostsSolution(lexer(problem)));
             writeToFile("DFS", dfs.NodesCostsSolution(lexer(problem)));
-            writeToFile("bestFS", bestfs.NodesCostsSolution(lexer(problem)));
-            writeToFile("Astar", astar.NodesCostsSolution(lexer(problem)));
+            writeToFile("BFS", bfs.NodesCostsSolution(lexer(problem)));
+            writeToFile("A*", astar.NodesCostsSolution(lexer(problem)));
 
             problem.clear();
             matrixNum++;

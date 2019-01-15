@@ -70,11 +70,8 @@ string MatrixSolver::NodesCostsSolution(Searchable<Point> *problem) {
     vector<State<Point> *> path;
     path = this->searchAlgorithm->search(problem);
     string tempSolution = getPathInstructions(path);
-    matrixSolution +=
-            "Evaluated Nodes Number: " + to_string(this->searchAlgorithm->getNumOfNodes()) + '\n';
-    matrixSolution +=
-            "Cost Solution: " + to_string((this->searchAlgorithm->getTotalPathCost())) + '\n';
-    matrixSolution += "Path: " + getPathInstructions(path) + '\n';
+    matrixSolution += to_string((this->searchAlgorithm->getTotalPathCost())) +',';
+    matrixSolution += to_string(this->searchAlgorithm->getNumOfNodes()) + '\n';
     return matrixSolution;
 }
 
