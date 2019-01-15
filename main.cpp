@@ -110,8 +110,8 @@ void loadFromFile() {
         if (line == "@") {
             writeToFile("matrix number " + to_string(matrixNum) + '\n' + "bfs",
                         bfs.NodesCostsSolution(lexer(problem)));
-            writeToFile("dfs", dfs.NodesCostsSolution(lexer(problem)));
-            writeToFile("besrFS", bestfs.NodesCostsSolution(lexer(problem)));
+            writeToFile("DFS", dfs.NodesCostsSolution(lexer(problem)));
+            writeToFile("bestFS", bestfs.NodesCostsSolution(lexer(problem)));
             writeToFile("Astar", astar.NodesCostsSolution(lexer(problem)));
 
             problem.clear();

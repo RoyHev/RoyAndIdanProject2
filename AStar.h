@@ -29,6 +29,11 @@ public:
         totalPathCost = 0;
     }
 
+    void resetMembers(){
+        this->totalPathCost = 0;
+        this->numOfNodes = 0;
+    }
+
     /**
  * Checks whether or not a specific node has been visited during the BFS algorithm.
  * @param nodesVec - vector of nodes that have been visited.
@@ -62,6 +67,7 @@ public:
 
     //TODO - check if we can remove the line that sets initial's came from to itself !!
     vector<State<T> *> search(Searchable<T> *searchable) override {
+        resetMembers();
         //keeps the nodes we've already traveled in
         vector<State<T> *> nodesVisited;
         //keeps the nodes we need to travel in. sorts the nodes from the ones with the lowest
@@ -78,7 +84,9 @@ public:
         while (!open.empty()) {
             currentState = open.top();
             open.pop();
-            this->numOfNodes+=1;
+            if (!hasNodeBeenVisited(nodesVisited, currentState)) {
+                this->numOfNodes += 1;
+            }
             //if the are no more paths to check to the destination node then return the path to it
             if (currentState->equalsTo(searchable->getGoalState())) {
                 path.insert(path.begin(), currentState);

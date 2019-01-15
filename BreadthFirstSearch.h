@@ -37,6 +37,7 @@ public:
     }
     //BFS algorithm.
     vector<State<T> *> search(Searchable<T> *searchable) override {
+        resetMembers();
         vector<State<T> *> nodesVisited;
         vector<State<T> *> path;
         //set the current state to the initial we received from the problem.
@@ -89,6 +90,11 @@ public:
 
     double getTotalPathCost() const {
         return totalPathCost;
+    }
+
+    void resetMembers(){
+        this->totalPathCost = 0;
+        this->numOfNodes = 0;
     }
 
 };

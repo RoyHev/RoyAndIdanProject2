@@ -59,6 +59,7 @@ public:
 
     //TODO - check if we can remove the line that sets initial's came from to itself !!
     vector<State<T> *> search(Searchable<T> *searchable) override {
+        resetMembers();
         //keeps the nodes we've already traveled in
         vector<State<T> *> nodesVisited;
         //keeps the nodes we need to travel in. sorts the nodes from the ones with the lowest path-cost to the highest
@@ -73,7 +74,7 @@ public:
         while (!open.empty()) {
             currentState = open.top();
             open.pop();
-            this->numOfNodes += 1;
+            this->numOfNodes+=1;
             //if the are no more paths to check to the destination node then return the path to it
             if (currentState->equalsTo(searchable->getGoalState())) {
                 path.insert(path.begin(), currentState);
@@ -120,6 +121,11 @@ public:
         }
         //could not find path from requested initial to goal.
         return path;
+    }
+
+    void resetMembers(){
+        this->totalPathCost = 0;
+        this->numOfNodes = 0;
     }
 
     int getNumOfNodes() const {

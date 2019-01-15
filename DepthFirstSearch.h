@@ -36,6 +36,7 @@ public:
     }
 
     vector<State<T> *> search(Searchable<T> *searchable) override {
+        resetMembers();
         vector<State<T> *> nodesVisited;
         vector<State<T> *> tempVec;
         stack<State<T> *> stateStack;
@@ -86,6 +87,11 @@ public:
 
     double getTotalPathCost() const {
         return totalPathCost;
+    }
+
+    void resetMembers(){
+        this->totalPathCost = 0;
+        this->numOfNodes = 0;
     }
 };
 
