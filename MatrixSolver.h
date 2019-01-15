@@ -16,7 +16,6 @@
 #define RIGHT "Right"
 #define NO_PATH "-1"
 #define COMMA ", "
-#define COMMA2 ","
 
 class MatrixSolver : public Solver<Searchable<Point> *, string> {
     Searcher<Point> *searchAlgorithm{};

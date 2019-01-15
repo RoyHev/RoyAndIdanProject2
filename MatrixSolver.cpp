@@ -62,15 +62,3 @@ string MatrixSolver::getPathInstructions(vector<State<Point> *> path) {
             ->getState());
     return pathInstructions;
 }
-
-//TODO - delete this later.
-string MatrixSolver::NodesCostsSolution(Searchable<Point> *problem) {
-    string matrixSolution = "";
-    vector<State<Point> *> path;
-    path = this->searchAlgorithm->search(problem);
-    string tempSolution = getPathInstructions(path);
-    matrixSolution += to_string((this->searchAlgorithm->getTotalPathCost())) +',';
-    matrixSolution += to_string(this->searchAlgorithm->getNumOfNodes()) + '\n';
-    return matrixSolution;
-}
-
